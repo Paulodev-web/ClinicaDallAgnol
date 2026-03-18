@@ -1,0 +1,28 @@
+1. Hero Section (Acolhimento de Luxo)
+Visual: Uma foto suave da recepção ou de uma secretária com vestimenta profissional (estilo concierge), transmitindo hospitalidade.
+Copy: "Inicie sua jornada para um sorriso extraordinário."
+Subheadline: "Nossa equipe de atendimento está pronta para direcionar o seu caso ao especialista ideal."
+O Porquê: O termo "Direcionar ao especialista ideal" reforça, pela última vez, que a clínica tem um time e que o paciente será encaminhado para quem melhor resolve o problema dele.
+2. O Formulário de Triagem Estratégica
+Em vez de um formulário com 20 campos, use um Formulário Inteligente (Step-by-step) usando Framer Motion.
+Campos Essenciais: Nome, WhatsApp e a pergunta chave: "Qual é o seu principal objetivo hoje?"
+Opções de Seleção (O Filtro):
+Transformação Estética Completa (Lentes/Laminados) -> [Foco: Claudio]
+Implantes ou Reabilitação Oral -> [Foco: Claudio]
+Tratamento de Canal ou Dor -> [Foco: Especialista 1]
+Harmonização Orofacial -> [Foco: Especialista 2]
+O Porquê: Quando a secretária recebe esse lead no WhatsApp ou E-mail, ela já sabe o valor potencial do cliente. Se ele marcou "Lentes", ele vai para uma fila de prioridade máxima. Se marcou "Canal", ela já agenda direto com o especialista sem "gastar" o tempo da agenda do Dr. Claudio.
+3. Seção "Atendimento Concierge" (WhatsApp Premium)
+Conteúdo: Um botão de WhatsApp flutuante ou em destaque, mas com uma copy diferenciada.
+Copy: "Falar com nosso Concierge de Atendimento."
+O Porquê: Trocar "Falar com a recepção" por "Concierge" eleva imediatamente a percepção de valor. O cliente sente que terá um tratamento VIP desde o primeiro contato.
+4. Localização e Facilidades
+Conteúdo: Mapa estilizado (use um estilo customizado do Google Maps para combinar com as cores do site) + Informações de estacionamento/valet.
+Copy: "Privacidade e facilidade de acesso no coração de [Nome da Cidade]."
+O Porquê: Clientes de alto padrão valorizam conveniência. Se a clínica tem estacionamento privativo ou manobrista, isso deve ser destacado como um diferencial de conforto.
+5. Seção "O que acontece agora?" (Redução de Ansiedade)
+Conteúdo: Um pequeno stepper (passo a passo):
+Triagem: Analisamos sua necessidade.
+Agendamento: Marcamos com o especialista ideal.
+Avaliação: Você recebe um diagnóstico preciso.
+O Porquê: O cliente high-ticket gosta de saber o processo. Isso demonstra organização e profissionalismo extremo.

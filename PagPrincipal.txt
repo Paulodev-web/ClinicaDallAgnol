@@ -1,0 +1,38 @@
+1. Hero Section (A Primeira Impressão)
+O que contém:
+Visual: Uma imagem de fundo (ou vídeo em slow motion) em altíssima resolução. Pode ser o Dr. Claudio em um momento de planejamento (olhando para uma tela com um escaneamento 3D) ou um detalhe de um sorriso perfeito e natural.
+Headline: "Excelência clínica. Experiência exclusiva."
+Subheadline: "Um ecossistema completo de saúde oral focado em alta performance estética e funcional, liderado pelo Dr. Claudio Dall’Agnol."
+CTA (Call to Action): Botão: "Agendar sua Consulta".
+A Estratégia (O Porquê):
+Filtro de Público: Usar termos como "Alta Performance" e "Reabilitações Complexas" afasta quem procura apenas o "limpeza barata" e atrai quem tem um problema grande para resolver.
+Posicionamento de Marca: A palavra "Direção" começa a desvincular o Dr. Claudio do operacional braçal e o coloca como o "arquiteto" do sorriso.
+2. Social Proof / Authority Bar
+O que contém: Uma barra discreta com números: "+20 anos de experiência", "+10.000 sorrisos transformados", "Especialista em [X] e [Y]".
+A Estratégia (O Porquê):
+Validação Rápida: O cérebro humano decide em milissegundos se confia em alguém. Prova social quantitativa gera autoridade instantânea antes mesmo de ele ler sobre a clínica.
+3. O "Conceito Dall'Agnol" (A Transição de Imagem)
+O que contém: Texto curto acompanhado de uma foto do Dr. Claudio em um ambiente clínico impecável. O texto fala sobre a evolução da clínica e a busca pela excelência multidisciplinar.
+A Estratégia (O Porquê):
+Humanização e Confiança: É aqui que explicamos que a clínica é uma extensão do rigor técnico dele. Você prepara o paciente para entender que, mesmo que outro dentista faça o canal, o "padrão de qualidade" é do Claudio.
+4. Pilares de Especialidade (O Filtro de Receita)
+O que contém: 3 ou 4 cards grandes e elegantes.
+Card 1 (Destaque): Lentes de Contato e Estética (Foco do Claudio).
+Card 2 (Destaque): Implantes e Carga Imediata (Foco do Claudio).
+Card 3: Endodontia Avançada - Microscopia (Delegado).
+Card 4: Harmonização Orofacial (Delegada).
+A Estratégia (O Porquê):
+Hierarquia Visual: Use Framer Motion para dar mais destaque/brilho nos cards de alto ticket (1 e 2). Isso guia o olho do cliente para o que o Dr. Claudio quer vender.
+Educação: Ao colocar "Microscopia" no canal, você eleva o serviço delegado a um nível premium, facilitando a aceitação do paciente em não ser atendido pelo "dono".
+5. Tecnologia e Diferenciais (Justificativa de Preço)
+O que contém: Ícones finos (estilo lucide-react) com textos curtos: "Escaneamento Intraoral 3D", "Sedação Consciente", "Laboratório Digital Próprio".
+A Estratégia (O Porquê):
+Tangibilização do Valor: O cliente high-ticket odeia sentir dor e odeia perder tempo. Mostrar que a clínica tem tecnologia reduz o medo e justifica por que a consulta dele custa mais caro que a do vizinho.
+6. Depoimentos "Lifestyle"
+O que contém: Fotos de pacientes reais (preferencialmente pessoas influentes da cidade) com um breve relato sobre a experiência de tratamento.
+A Estratégia (O Porquê):
+Pertencimento: Se o "maior dentista da cidade" atende as "maiores pessoas da cidade", o cliente quer fazer parte desse grupo. É o gatilho da exclusividade.
+7. Footer de Conversão (Final de Funil)
+O que contém: Mapa interativo, horários e um CTA final forte: "Pronto para elevar o seu sorriso ao próximo nível?"
+A Estratégia (O Porquê):
+Conveniência: O site precisa ser funcional. O cliente de alto padrão é ocupado; facilite o contato direto com a secretária via WhatsApp Premium.
