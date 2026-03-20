@@ -3,7 +3,17 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const techItems = [
+type TechItem =
+  | {
+      empty: false;
+      title: string;
+      description: string;
+      image: string;
+      imageAlt: string;
+    }
+  | { empty: true };
+
+const techItems: TechItem[] = [
   {
     title: "Máquina de Raio X Portátil",
     description: "Diagnóstico rápido e preciso direto no consultório.",
@@ -58,7 +68,7 @@ export function TechSection() {
                         src={item.image}
                         alt={item.imageAlt}
                         fill
-                        quality={90}
+                        quality={100}
                         className={`object-cover transition-transform duration-500 group-hover:scale-105 ${item.image === "/Claudiocomintraoral.jpg" ? "object-[55%_35%]" : ""}`}
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
