@@ -65,7 +65,7 @@ export default function ContatoPage() {
   return (
     <>
       <PageHero
-        title="Inicie sua jornada para um sorriso extraordinário"
+        title="Cuidando de pessoas, transformando sorrisos"
         subtitle="Nossa equipe de atendimento está pronta para direcionar o seu caso ao especialista ideal."
       />
 
@@ -283,7 +283,7 @@ export default function ContatoPage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Localização"
-                className="grayscale opacity-80"
+                className="w-full h-full"
               />
             </div>
           </motion.div>

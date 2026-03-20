@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -8,6 +8,17 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-signature",
 });
 
 export const metadata: Metadata = {
@@ -23,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${plusJakarta.variable} font-sans antialiased`}>
+      <body className={`${plusJakarta.variable} ${playfairDisplay.variable} ${greatVibes.variable} font-sans antialiased`}>
         <Header />
         <main className="pt-20">{children}</main>
         <Footer />

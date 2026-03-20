@@ -7,42 +7,46 @@ import { motion } from "framer-motion";
 
 const highTicketServices = [
   {
-    id: "lentes",
-    title: "Lentes de Contato e Estética",
+    id: "facetas",
+    title: "Facetas",
     copy: "A união entre a ciência da saúde e a arte do sorriso.",
     description:
-      "O Dr. Claudio planeja cada caso com análise facial, visagismo e mock-up digital. Não é apenas colocar lente — é um projeto de arquitetura facial liderado por um especialista premiado.",
+      "Transformação do sorriso com precisão e naturalidade. Cada caso é planejado com análise facial, visagismo e mock-up digital para resultados harmoniosos e duradouros.",
+    image: "/Lente-de-contato-dental-estraga-os-dentes.webp",
   },
   {
-    id: "implantes",
-    title: "Implantes e Carga Imediata",
+    id: "implantodontia",
+    title: "Implantodontia",
     copy: "Reabilitação oral com tecnologia de ponta.",
     description:
-      "Procedimentos de implantes com planejamento digital e carga imediata quando indicado. Resultados previsíveis e duradouros.",
+      "Procedimentos de implantes com planejamento digital. Resultados previsíveis e duradouros para recuperar função e estética.",
+    image: "/Implantes.jpg",
   },
 ];
 
 const delegatedServices = [
   {
-    id: "endodontia",
-    title: "Endodontia Avançada - Microscopia",
-    copy: "Precisão e conforto em cada detalhe.",
+    id: "ortodontia",
+    title: "Ortodontia",
+    copy: "Alinhamento e correção da posição dos dentes.",
     description:
-      "Nossa equipe conta com especialista dedicado exclusivamente à Endodontia Avançada, utilizando Microscopia Operatória para tratamentos rápidos e indolores.",
+      "Tratamentos ortodônticos para corrigir a oclusão e alinhar o sorriso, com técnicas modernas e conforto.",
+    image: "/Ortodontia.jpg",
   },
   {
-    id: "harmonizacao",
-    title: "Harmonização Orofacial",
-    copy: "Estética Orofacial e Naturalidade.",
+    id: "endodontia",
+    title: "Endodontia",
+    copy: "Precisão e conforto em cada detalhe.",
     description:
-      "Referência em procedimentos injetáveis, focada em realçar a beleza de forma sutil e personalizada.",
+      "Nossa equipe conta com especialista dedicado à Endodontia, utilizando Microscopia Operatória para tratamentos rápidos e indolores.",
+    image: "/Endodontia.jpg",
   },
 ];
 
 const faqItems = [
   {
-    q: "Quanto tempo dura o tratamento com lentes?",
-    a: "Com os cuidados adequados, as lentes podem durar muitos anos. A durabilidade depende de hábitos de higiene e acompanhamento regular.",
+    q: "Quanto tempo dura o tratamento com facetas?",
+    a: "Com os cuidados adequados, as facetas podem durar muitos anos. A durabilidade depende de hábitos de higiene e acompanhamento regular.",
   },
   {
     q: "O procedimento dói?",
@@ -64,9 +68,6 @@ export default function ServicosPage() {
 
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">
-            Serviços High-Ticket
-          </h2>
           <div className="space-y-24">
             {highTicketServices.map((service, i) => (
               <motion.div
@@ -97,9 +98,10 @@ export default function ServicosPage() {
                 <div className={i % 2 === 1 ? "lg:order-1" : ""}>
                   <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                     <Image
-                      src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80"
+                      src={service.image}
                       alt={service.title}
                       fill
+                      quality={90}
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
@@ -124,18 +126,30 @@ export default function ServicosPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl p-8 border border-gray-200"
+                className="bg-white rounded-2xl overflow-hidden border border-gray-200"
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{service.copy}</p>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {service.description}
-                </p>
-                <Button href="/contato" variant="outline" size="sm">
-                  Solicitar avaliação
-                </Button>
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    quality={90}
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="p-8">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{service.copy}</p>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  <Button href="/contato" variant="outline" size="sm">
+                    Solicitar avaliação
+                  </Button>
+                </div>
               </motion.div>
             ))}
           </div>

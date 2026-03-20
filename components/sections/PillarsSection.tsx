@@ -6,31 +6,31 @@ import Image from "next/image";
 
 const especialidades = [
   {
-    title: "Lentes de Contato e Estética",
-    description: "Transformação facial com precisão e naturalidade.",
-    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&q=80",
-    href: "/servicos#lentes",
+    title: "Facetas",
+    description: "Transformação do sorriso com precisão e naturalidade.",
+    image: "/Lente-de-contato-dental-estraga-os-dentes.webp",
+    href: "/servicos#facetas",
     highlight: true,
   },
   {
-    title: "Implantes e Carga Imediata",
+    title: "Implantodontia",
     description: "Reabilitação oral com tecnologia de ponta.",
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&q=80",
-    href: "/servicos#implantes",
+    image: "/Implantes.jpg",
+    href: "/servicos#implantodontia",
     highlight: true,
   },
   {
-    title: "Endodontia Avançada - Microscopia",
-    description: "Precisão microscópica e salvamento dental.",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80",
-    href: "/servicos#endodontia",
+    title: "Ortodontia",
+    description: "Alinhamento e correção da posição dos dentes.",
+    image: "/Ortodontia.jpg",
+    href: "/servicos#ortodontia",
     highlight: false,
   },
   {
-    title: "Harmonização Orofacial",
-    description: "Estética orofacial e naturalidade.",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80",
-    href: "/servicos#harmonizacao",
+    title: "Endodontia",
+    description: "Precisão microscópica e salvamento dental.",
+    image: "/Endodontia.jpg",
+    href: "/servicos#endodontia",
     highlight: false,
   },
 ];
@@ -45,10 +45,13 @@ export function PillarsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
+          <span className="inline-block text-primary font-bold text-sm tracking-[0.2em] uppercase mb-3">
+            Áreas de excelência
+          </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
             Especialidades
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Serviços de alta performance para quem busca excelência em saúde oral
           </p>
         </motion.div>
@@ -78,6 +81,7 @@ export function PillarsSection() {
                         src={item.image}
                         alt={item.title}
                         fill
+                        quality={100}
                         className="object-cover"
                         sizes="85vw"
                       />
@@ -127,6 +131,7 @@ export function PillarsSection() {
                       src={item.image}
                       alt={item.title}
                       fill
+                      quality={100}
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 1024px) 50vw, 25vw"
                     />

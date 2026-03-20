@@ -10,6 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#35A7DD",
+        gold: {
+          600: "#b8860b",
+        },
         light: {
           50: "#fafafa",
           100: "#f5f5f5",
@@ -25,11 +28,14 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-plus-jakarta)", "system-ui", "sans-serif"],
+        serif: ["var(--font-playfair)", "Georgia", "serif"],
+        signature: ["var(--font-signature)", "cursive"],
         display: ["var(--font-plus-jakarta)", "system-ui", "sans-serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",
         "slide-up": "slideUp 0.6s ease-out forwards",
+        "pulse-slow": "pulseSlow 4s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -39,6 +45,10 @@ const config: Config = {
         slideUp: {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        pulseSlow: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.85" },
         },
       },
     },

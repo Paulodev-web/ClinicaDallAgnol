@@ -12,7 +12,7 @@ const teamMembers = [
     focus: "Responsável pelo planejamento de casos complexos e reabilitações orais.",
     description:
       "Especialista em Lentes de Contato, Implantes e Reabilitação Oral. Foco nas especializações internacionais e no papel de estrategista.",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=500&fit=crop",
+    image: "/DrClaudio.jpg",
   },
   {
     name: "Dra. [Especialista em Canal]",
@@ -20,7 +20,7 @@ const teamMembers = [
     focus: "Precisão microscópica e salvamento dental.",
     description:
       "Dedica sua carreira exclusivamente à Endodontia Avançada, utilizando tecnologia de ponta para tratamentos rápidos e indolores.",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=500&fit=crop",
+    image: "/Gabriel.jpg",
   },
   {
     name: "Dra. [Especialista em Harmonização]",
@@ -28,7 +28,7 @@ const teamMembers = [
     focus: "Estética Orofacial e Naturalidade.",
     description:
       "Referência em procedimentos injetáveis, focada em realçar a beleza de forma sutil e personalizada.",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=500&fit=crop",
+    image: "/Paula.jpg",
   },
 ];
 
@@ -48,35 +48,6 @@ export default function EquipePage() {
 
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative aspect-[3/4] rounded-2xl overflow-hidden"
-            >
-              <Image
-                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&q=80"
-                alt="Equipe de dentistas"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <p className="text-gray-600 text-lg leading-relaxed">
-                A clínica não é &quot;o Claudio e seus ajudantes&quot;, mas um time de
-                especialistas. Os casos são discutidos em conjunto, com
-                interconsultas que garantem o melhor plano de tratamento para
-                cada paciente.
-              </p>
-            </motion.div>
-          </div>
-
           <div className="space-y-24">
             {teamMembers.map((member, i) => (
               <motion.div
@@ -94,8 +65,9 @@ export default function EquipePage() {
                       src={member.image}
                       alt={member.name}
                       fill
+                      quality={100}
                       className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 400px"
+                      sizes="(max-width: 1024px) 100vw, 500px"
                     />
                   </div>
                 </div>

@@ -15,8 +15,8 @@ export function ConceptSection() {
             className="relative aspect-[3/4] rounded-2xl overflow-hidden max-w-sm mx-auto lg:mx-0 lg:ml-12"
           >
             <Image
-              src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80"
-              alt="Dr. Claudio Dall'Agnol em ambiente clínico"
+              src="/ClaudioAtendendo.jpg"
+              alt="Dr. Claudio Dall'Agnol atendendo paciente"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

@@ -17,7 +17,7 @@ export function WhatsAppButton() {
       aria-label="Falar com Concierge de Atendimento via WhatsApp"
     >
       <svg
-        className="w-6 h-6"
+        className="w-6 h-6 animate-pulse-slow"
         fill="currentColor"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

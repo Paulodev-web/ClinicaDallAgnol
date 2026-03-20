@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Clock, ExternalLink } from "lucide-react";
+import { MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const MAPS_URL = "https://maps.app.goo.gl/w4VkwirjPYeTmhmY6";
@@ -66,17 +66,8 @@ export function FooterCTA() {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Localização Clínica Dall'Agnol"
-                  className="grayscale contrast-[1.08] group-hover:grayscale-0 group-hover:contrast-100 transition-all duration-500"
+                  className="w-full h-full"
                 />
-                <a
-                  href={MAPS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute top-3 left-3 inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/95 backdrop-blur-sm shadow-md text-sm font-medium text-gray-700 hover:bg-white transition-colors pointer-events-auto"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  Abrir no Maps
-                </a>
               </div>
             </div>
           </motion.div>

@@ -11,7 +11,7 @@ interface PageHeroProps {
 export function PageHero({ title, subtitle, className = "" }: PageHeroProps) {
   return (
     <section
-      className={`py-32 bg-gray-50 relative overflow-hidden ${className}`}
+      className={`py-24 bg-gray-50 relative overflow-hidden ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

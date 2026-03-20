@@ -5,26 +5,14 @@ import Image from "next/image";
 
 const techItems = [
   {
-    title: "Escaneamento Intraoral 3D",
-    description: "Precisão digital para planejamento e execução.",
-    image:
-      "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&q=80",
-    imageAlt: "Tecnologia de escaneamento digital",
+    title: "Máquina de Raio X Portátil",
+    description: "Diagnóstico rápido e preciso direto no consultório.",
+    image: "/Claudiocomintraoral.jpg",
+    imageAlt: "Dr. Claudio Dall'Agnol realizando escaneamento intraoral",
+    empty: false,
   },
-  {
-    title: "Sedação Consciente",
-    description: "Conforto e tranquilidade durante os procedimentos.",
-    image:
-      "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80",
-    imageAlt: "Ambiente de conforto e tranquilidade",
-  },
-  {
-    title: "Laboratório Digital Próprio",
-    description: "Controle total sobre qualidade e prazos.",
-    image:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80",
-    imageAlt: "Laboratório de precisão",
-  },
+  { empty: true },
+  { empty: true },
 ];
 
 export function TechSection() {
@@ -52,33 +40,40 @@ export function TechSection() {
         <div className="grid md:grid-cols-3 gap-8">
           {techItems.map((item, i) => (
             <motion.div
-              key={item.title}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              whileHover={{ y: -8 }}
+              whileHover={item.empty ? undefined : { y: -8 }}
               className="group"
             >
-              <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08),0_8px_16px_-6px_rgba(0,0,0,0.04)] border border-gray-100 transition-shadow duration-300 group-hover:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.12),0_16px_24px_-8px_rgba(0,0,0,0.06)] h-full flex flex-col">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.imageAlt}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-                <div className="p-6 flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+              <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08),0_8px_16px_-6px_rgba(0,0,0,0.04)] border border-gray-100 transition-shadow duration-300 group-hover:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.12),0_16px_24px_-8px_rgba(0,0,0,0.06)] h-full flex flex-col min-h-[280px]">
+                {item.empty ? (
+                  <div className="aspect-[4/3] bg-gray-100" />
+                ) : (
+                  <>
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.imageAlt}
+                        fill
+                        quality={90}
+                        className={`object-cover transition-transform duration-500 group-hover:scale-105 ${item.image === "/Claudiocomintraoral.jpg" ? "object-[55%_35%]" : ""}`}
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    </div>
+                    <div className="p-6 flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
           ))}

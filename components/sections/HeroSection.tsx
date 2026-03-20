@@ -5,12 +5,13 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1920&q=80"
+          src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1920&q=90"
           alt="Clínica odontológica"
           fill
+          quality={90}
           className="object-cover"
           priority
           sizes="100vw"
