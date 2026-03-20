@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
     const data = await res.json();
     const leads = Array.isArray(data) ? data : [];
     const jsonRes = NextResponse.json(leads);
+    jsonRes.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
     return mergeAuthCookies(authResult.response, jsonRes);
   } catch (error) {
     console.error("Admin leads error:", error);
