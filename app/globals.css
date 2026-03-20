@@ -29,4 +29,8 @@ body {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  /* Scientific Journal overline */
+  .overline {
+    @apply text-xs uppercase tracking-[0.3em] font-medium text-zinc-500;
+  }
 }

@@ -4,6 +4,16 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import {
+  Brush,
+  Sparkles,
+  Cross,
+  Baby,
+  ScanFace,
+  Activity,
+  Layers,
+  ShieldCheck,
+} from "lucide-react";
 
 const highTicketServices = [
   {
@@ -40,6 +50,57 @@ const delegatedServices = [
     description:
       "Nossa equipe conta com especialista dedicado à Endodontia, utilizando Microscopia Operatória para tratamentos rápidos e indolores.",
     image: "/Endodontia.jpg",
+  },
+];
+
+const secondarySpecialties = [
+  {
+    id: "prevencao",
+    title: "Prevenção & Profilaxia",
+    description: "Limpeza regular e prevenção de doenças.",
+    icon: Brush,
+  },
+  {
+    id: "clareamento",
+    title: "Clareamento Dental",
+    description: "Tratamentos estéticos para um sorriso mais branco.",
+    icon: Sparkles,
+  },
+  {
+    id: "extracoes",
+    title: "Extrações Clínicas",
+    description: "Remoção segura de dentes (sisos, etc.).",
+    icon: Cross,
+  },
+  {
+    id: "odontopediatria",
+    title: "Odontopediatria",
+    description: "Cuidados dedicados aos dentes das crianças.",
+    icon: Baby,
+  },
+  {
+    id: "harmonizacao",
+    title: "Harmonização Orofacial",
+    description: "Tratamentos estéticos para equilibrar o rosto.",
+    icon: ScanFace,
+  },
+  {
+    id: "periodontia",
+    title: "Periodontia",
+    description: "Cuidados com gengivas e tecidos de suporte.",
+    icon: Activity,
+  },
+  {
+    id: "proteses",
+    title: "Próteses",
+    description: "Reabilitação para dentes perdidos (parciais ou totais).",
+    icon: Layers,
+  },
+  {
+    id: "restauradora",
+    title: "Odontologia Restauradora",
+    description: "Tratamento de cáries e restaurações.",
+    icon: ShieldCheck,
   },
 ];
 
@@ -157,6 +218,43 @@ export default function ServicosPage() {
       </section>
 
       <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">
+            Nossa Atuação Completa
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {secondarySpecialties.map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="flex flex-col items-center text-center p-6 rounded-2xl border border-gray-200 bg-gray-50/50 hover:border-primary/30 hover:bg-white transition-all duration-300"
+              >
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
+                  <item.icon className="w-7 h-7" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+          <div className="mt-16 text-center">
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Oferecemos soluções completas para a sua saúde bucal. Caso não
+              encontre a especialidade procurada, consulte nossa equipe.
+            </p>
+            <Button href="/contato" variant="primary" size="lg">
+              Ver Todos os Nossos Tratamentos
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-gray-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
             Perguntas Frequentes
@@ -168,7 +266,7 @@ export default function ServicosPage() {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-gray-50 rounded-xl p-6 border border-gray-200"
+                className="bg-white rounded-xl p-6 border border-gray-200"
               >
                 <h4 className="font-semibold text-gray-900 mb-2">{item.q}</h4>
                 <p className="text-gray-600">{item.a}</p>

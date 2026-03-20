@@ -1,13 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-
-const MAPS_URL = "https://maps.app.goo.gl/w4VkwirjPYeTmhmY6";
-const ADDRESS = "Passo Fundo, RS";
-const MAPS_EMBED_URL =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3490.1544673632757!2d-52.3477451!3d-28.982793399999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951d163c7c7f814b%3A0x9169c0c5ed6d5d87!2sCl%C3%ADnica%20Odontol%C3%B3gica%20Dallagnol!5e0!3m2!1spt-PT!2sbr!4v1773789264290!5m2!1spt-PT!2sbr";
+import { MAPS_URL, ADDRESS, MAPS_EMBED_URL, WHATSAPP_NUMBER } from "@/lib/constants";
+import { trackWhatsAppClick } from "@/lib/track";
 
 const schedule = [
   { days: "Segunda a Sexta", hours: "08h às 18h" },
@@ -15,6 +13,9 @@ const schedule = [
 ];
 
 export function FooterCTA() {
+  const pathname = usePathname();
+  const pageOrigin = pathname === "/" ? "home" : (pathname?.replace(/^\//, "") || "home");
+
   return (
     <section
       className="py-24"
@@ -39,12 +40,13 @@ export function FooterCTA() {
                 Agendar Consulta
               </Button>
               <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5511999999999"}`}
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick(pageOrigin)}
                 className="inline-flex items-center justify-center rounded-lg border-2 border-gray-300 px-6 py-3 text-base font-medium text-gray-700 transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-50/50 hover:text-emerald-700"
               >
-                Falar com Concierge
+                Fale com o Dr. Claudio
               </a>
             </div>
           </motion.div>

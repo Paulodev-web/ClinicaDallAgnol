@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Playfair_Display, Great_Vibes } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -35,10 +33,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${plusJakarta.variable} ${playfairDisplay.variable} ${greatVibes.variable} font-sans antialiased`}>
-        <Header />
-        <main className="pt-20">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );

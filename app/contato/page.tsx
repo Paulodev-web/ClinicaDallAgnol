@@ -4,29 +4,9 @@ import { useState } from "react";
 import { PageHero } from "@/components/sections/PageHero";
 import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
-
-const objectives = [
-  {
-    value: "lentes",
-    label: "Transformação Estética Completa (Lentes/Laminados)",
-    focus: "Claudio",
-  },
-  {
-    value: "implantes",
-    label: "Implantes ou Reabilitação Oral",
-    focus: "Claudio",
-  },
-  {
-    value: "canal",
-    label: "Tratamento de Canal ou Dor",
-    focus: "Especialista 1",
-  },
-  {
-    value: "harmonizacao",
-    label: "Harmonização Orofacial",
-    focus: "Especialista 2",
-  },
-];
+import { MAPS_EMBED_URL, WHATSAPP_NUMBER } from "@/lib/constants";
+import { trackWhatsAppClick } from "@/lib/track";
+import { CheckCircle2 } from "lucide-react";
 
 const steps = [
   { id: 1, title: "Triagem", desc: "Analisamos sua necessidade." },
@@ -39,15 +19,38 @@ export default function ContatoPage() {
   const [formData, setFormData] = useState({
     name: "",
     whatsapp: "",
-    objective: "",
+    message: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleNext = () => {
-    if (step < 3) setStep(step + 1);
+  const handleNext = async () => {
+    if (step < 2) setStep(step + 1);
     else {
-      const message = `Olá! Sou ${formData.name}. Meu objetivo: ${objectives.find((o) => o.value === formData.objective)?.label || formData.objective}. WhatsApp: ${formData.whatsapp}`;
-      const url = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5511999999999"}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
+      setSubmitting(true);
+      setSubmitError(null);
+      try {
+        const res = await fetch("/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            phone: formData.whatsapp.replace(/\D/g, ""),
+            message: formData.message || null,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          setSubmitError(data.error || "Erro ao enviar. Tente novamente.");
+          return;
+        }
+        setSubmitted(true);
+      } catch {
+        setSubmitError("Erro de conexão. Verifique sua internet.");
+      } finally {
+        setSubmitting(false);
+      }
     }
   };
 
@@ -58,7 +61,6 @@ export default function ContatoPage() {
   const canProceed = () => {
     if (step === 1) return formData.name.trim().length > 0;
     if (step === 2) return formData.whatsapp.replace(/\D/g, "").length >= 10;
-    if (step === 3) return formData.objective.length > 0;
     return false;
   };
 
@@ -77,12 +79,32 @@ export default function ContatoPage() {
               animate={{ opacity: 1, x: 0 }}
               className="bg-gray-50 rounded-2xl p-8 lg:p-12 border border-gray-200"
             >
+              <AnimatePresence mode="wait">
+                {submitted ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center text-center py-8"
+                  >
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                      <CheckCircle2 className="w-10 h-10 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      Recebemos seu contato!
+                    </h3>
+                    <p className="text-gray-600 text-lg max-w-sm">
+                      Logo entraremos em contato.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <>
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
                 Formulário de Triagem
               </h2>
 
               <div className="flex gap-2 mb-8">
-                {[1, 2, 3].map((s) => (
+                {[1, 2].map((s) => (
                   <div
                     key={s}
                     className={`h-1 flex-1 rounded-full transition-colors ${
@@ -146,52 +168,27 @@ export default function ContatoPage() {
                         className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:border-primary focus:outline-none"
                       />
                     </div>
-                  </motion.div>
-                )}
-
-                {step === 3 && (
-                  <motion.div
-                    key="step3"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="space-y-6"
-                  >
                     <div>
-                      <label className="block text-gray-600 mb-4">
-                        Qual é o seu principal objetivo hoje?
+                      <label className="block text-gray-600 mb-2">
+                        Mensagem ou objetivo (opcional)
                       </label>
-                      <div className="space-y-3">
-                        {objectives.map((obj) => (
-                          <label
-                            key={obj.value}
-                            className={`flex items-center p-4 rounded-lg border cursor-pointer transition-colors ${
-                              formData.objective === obj.value
-                                ? "border-primary bg-primary/10"
-                                : "border-gray-300 hover:border-gray-400"
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="objective"
-                              value={obj.value}
-                              checked={formData.objective === obj.value}
-                              onChange={() =>
-                                setFormData({
-                                  ...formData,
-                                  objective: obj.value,
-                                })
-                              }
-                              className="sr-only"
-                            />
-                            <span className="text-gray-600">{obj.label}</span>
-                          </label>
-                        ))}
-                      </div>
+                      <textarea
+                        value={formData.message}
+                        onChange={(e) =>
+                          setFormData({ ...formData, message: e.target.value })
+                        }
+                        placeholder="Ex: Gostaria de agendar avaliação para facetas"
+                        rows={3}
+                        className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:border-primary focus:outline-none resize-none"
+                      />
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              {submitError && (
+                <p className="mt-4 text-red-600 text-sm">{submitError}</p>
+              )}
 
               <div className="flex gap-4 mt-8">
                 {step > 1 && (
@@ -206,12 +203,19 @@ export default function ContatoPage() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  disabled={!canProceed()}
+                  disabled={!canProceed() || submitting}
                   className="flex-1 px-6 py-3 bg-primary text-dark-900 font-medium rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  {step === 3 ? "Enviar via WhatsApp" : "Continuar"}
+                  {submitting
+                    ? "Enviando..."
+                    : step === 2
+                      ? "Enviar"
+                      : "Continuar"}
                 </button>
               </div>
+                </>
+                )}
+              </AnimatePresence>
             </motion.div>
 
             <motion.div
@@ -247,12 +251,13 @@ export default function ContatoPage() {
                   Prefere falar diretamente? Nossa equipe está disponível via
                   WhatsApp.
                 </p>
-                <Button
-                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5511999999999"}`}
-                  variant="primary"
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  onClick={() => trackWhatsAppClick("contato")}
+                  className="inline-flex items-center justify-center rounded-lg bg-primary text-dark-900 px-6 py-3 font-medium hover:bg-primary/90 transition-colors"
                 >
-                  Falar com nosso Concierge de Atendimento
-                </Button>
+                  Fale com o Dr. Claudio
+                </a>
               </div>
             </motion.div>
           </div>
@@ -275,7 +280,7 @@ export default function ContatoPage() {
             </p>
             <div className="rounded-2xl overflow-hidden bg-gray-100 aspect-video max-w-4xl mx-auto border border-gray-200">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.5!2d-46.65!3d-23.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMzJzAwLjAiUyA0NsKwMzknMDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1"
+                src={MAPS_EMBED_URL}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
