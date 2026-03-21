@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 
 const stats = [
   { value: "+20", label: "anos de experiência" },
-  { value: "+10.000", label: "sorrisos transformados" },
   { value: "Especialista", label: "em Lentes e Implantes" },
 ];
 
