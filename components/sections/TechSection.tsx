@@ -8,8 +8,10 @@ type TechItem =
       empty: false;
       title: string;
       description: string;
-      image: string;
       imageAlt: string;
+      image?: string;
+      video?: string;
+      imageObjectPosition?: string;
     }
   | { empty: true };
 
@@ -18,7 +20,7 @@ const techItems: TechItem[] = [
     title: "Escaneamento Intraoral",
     description:
       "Captura digital precisa dos dentes, sem moldagens desconfortáveis, para planejamento personalizado de cada tratamento.",
-    image: "/ClaudioAtendendo.jpg",
+    video: "/Intra-oral.MOV",
     imageAlt: "Dr. Claudio Dall'Agnol realizando escaneamento intraoral na clínica",
     empty: false,
   },
@@ -27,6 +29,7 @@ const techItems: TechItem[] = [
     description: "Diagnóstico rápido e preciso direto no consultório.",
     image: "/Claudiocomintraoral.jpg",
     imageAlt: "Dr. Claudio Dall'Agnol realizando diagnóstico no consultório",
+    imageObjectPosition: "55% 35%",
     empty: false,
   },
   {
@@ -84,14 +87,31 @@ export function TechSection() {
                 ) : (
                   <>
                     <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={item.imageAlt}
-                        fill
-                        quality={100}
-                        className={`object-cover transition-transform duration-500 group-hover:scale-105 ${item.image === "/Claudiocomintraoral.jpg" ? "object-[55%_35%]" : ""}`}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      />
+                      {item.video ? (
+                        <video
+                          src={item.video}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          aria-label={item.imageAlt}
+                        />
+                      ) : item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt}
+                          fill
+                          quality={100}
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          style={
+                            item.imageObjectPosition
+                              ? { objectPosition: item.imageObjectPosition }
+                              : undefined
+                          }
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        />
+                      ) : null}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                     </div>
                     <div className="p-6 flex-1">

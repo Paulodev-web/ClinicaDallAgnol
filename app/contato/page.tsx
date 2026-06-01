@@ -253,11 +253,11 @@ export default function ContatoPage() {
 
               <div className="mt-12 p-6 bg-section-alt rounded-xl border border-graysoft/60">
                 <h3 className="font-medium text-ink mb-2">
-                  Atendimento Concierge
+                  Atendimento com o Dr. Claudio
                 </h3>
                 <p className="text-ink-secondary mb-4">
-                  Prefere falar diretamente? Nossa equipe está disponível via
-                  WhatsApp.
+                  Prefere falar diretamente? Entre em contato pelo WhatsApp e
+                  fale com o Dr. Claudio.
                 </p>
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}`}

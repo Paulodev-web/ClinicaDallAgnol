@@ -4,7 +4,8 @@ import { PageHero } from "@/components/sections/PageHero";
 import { FooterCTA } from "@/components/sections/FooterCTA";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import Link from "next/link";
+import { Check, ArrowRight } from "lucide-react";
 
 const teamMembers = [
   {
@@ -14,21 +15,23 @@ const teamMembers = [
     description:
       "É cirurgião-dentista graduado em Odontologia pela Universidade Luterana do Brasil. Pós-graduado em Cirurgia Oral, Implantodontia, Periodontia, Ortodontia e Reabilitação Oral Estética. Possui Mestrado em Odontologia na área de Clínica Odontológica. Tem como objetivo em seu trabalho devolver saúde, autoestima e qualidade de vida aos pacientes, preservando a naturalidade do sorriso e aliando performance clínica de alto padrão ao planejamento individualizado, à tecnologia digital e aos protocolos rigorosos que garantem segurança e resultados previsíveis em cada caso.",
     image: "/DrClaudio.png",
+    profileHref: "/claudio",
   },
   {
-    name: "Dra. [Especialista em Canal]",
-    role: "Endodontia Avançada",
-    focus: "Precisão microscópica e salvamento dental.",
+    name: "Dr. Gabriel Dall Agnol Oliveira",
+    role: "Cirurgião-Dentista | Endodontista",
+    focus:
+      "Cuidando da saúde bucal com precisão, dedicação e compromisso com o bem-estar dos pacientes.",
     description:
-      "Dedica sua carreira exclusivamente à Endodontia Avançada, utilizando tecnologia de ponta para tratamentos rápidos e indolores.",
+      "É cirurgião-dentista com atuação voltada à Endodontia, especialidade responsável pelo diagnóstico e tratamento das doenças da polpa dentária e dos tecidos ao redor das raízes.",
     image: "/Gabriel.jpg",
   },
   {
-    name: "Dra. [Especialista em Harmonização]",
-    role: "Harmonização Orofacial",
-    focus: "Estética Orofacial e Naturalidade.",
+    name: "Dra. Paula",
+    role: "Harmonização Orofacial e Ortodontia",
+    focus: "Equilíbrio facial, rejuvenescimento e saúde do sorriso.",
     description:
-      "Referência em procedimentos injetáveis, focada em realçar a beleza de forma sutil e personalizada.",
+      "Especialista em Harmonização Orofacial, atuando com procedimentos voltados ao equilíbrio facial, rejuvenescimento e valorização da beleza natural, sempre com foco em resultados harmônicos e personalizados. Na Ortodontia, realiza tratamentos para adultos e crianças, incluindo ortodontia preventiva, acompanhamento do desenvolvimento dentário e correção do alinhamento do sorriso, promovendo saúde, função e estética.",
     image: "/DrPaula.jpeg",
   },
 ];
@@ -79,6 +82,15 @@ export default function EquipePage() {
                   <p className="text-ink-secondary leading-relaxed">
                     {member.description}
                   </p>
+                  {"profileHref" in member && member.profileHref && (
+                    <Link
+                      href={member.profileHref}
+                      className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-primary uppercase tracking-wide hover:gap-3 transition-all"
+                    >
+                      Conheça o Dr. Claudio
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -124,8 +136,9 @@ export default function EquipePage() {
             viewport={{ once: true }}
             className="text-center text-ink-secondary mt-12 text-lg"
           >
-            Todos os profissionais seguem o mesmo rigor e padrão de qualidade
-            exigido pelo Dr. Claudio. Uma unidade de marca em cada atendimento.
+            Na Dall&apos;Agnol, cada atendimento reflete o mesmo rigor clínico,
+            os mesmos protocolos e o compromisso com excelência que definem nossa
+            clínica — do primeiro contato ao acompanhamento.
           </motion.p>
         </div>
       </section>

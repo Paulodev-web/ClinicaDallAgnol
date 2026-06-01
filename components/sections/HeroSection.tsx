@@ -5,13 +5,32 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const FALLBACK_ASPECT = 16 / 9;
+/** Segundos iniciais: logo visível com fade out. */
+const LOGO_AT_START_SECONDS = 2.5;
 /** Segundos finais do vídeo em que a logo aparece (antes do loop). */
 const LOGO_AT_END_SECONDS = 2.5;
+
+function logoOpacityAtTime(currentTime: number, duration: number): number {
+  let opacity = 0;
+
+  if (currentTime < LOGO_AT_START_SECONDS) {
+    const t = currentTime / LOGO_AT_START_SECONDS;
+    opacity = Math.max(0, 1 - t);
+  }
+
+  const remaining = duration - currentTime;
+  if (remaining <= LOGO_AT_END_SECONDS) {
+    const t = 1 - remaining / LOGO_AT_END_SECONDS;
+    opacity = Math.max(opacity, t);
+  }
+
+  return opacity;
+}
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
-  const [showLogo, setShowLogo] = useState(false);
+  const [logoOpacity, setLogoOpacity] = useState(1);
 
   const onMetadataLoaded = useCallback(() => {
     const video = videoRef.current;
@@ -22,20 +41,16 @@ export function HeroSection() {
   const onTimeUpdate = useCallback(() => {
     const video = videoRef.current;
     if (!video || !Number.isFinite(video.duration)) return;
-    const remaining = video.duration - video.currentTime;
-    setShowLogo(remaining <= LOGO_AT_END_SECONDS);
+    setLogoOpacity(logoOpacityAtTime(video.currentTime, video.duration));
   }, []);
 
   const ar = aspectRatio ?? FALLBACK_ASPECT;
 
   return (
-    <section className="relative flex min-h-[85vh] w-full items-center justify-center overflow-hidden bg-[var(--color-bg-page)]">
+    <section className="relative w-full overflow-hidden bg-[var(--color-bg-page)]">
       <div
         className="relative w-full overflow-hidden"
-        style={{
-          aspectRatio: ar,
-          maxHeight: "90vh",
-        }}
+        style={{ aspectRatio: ar }}
       >
         <video
           ref={videoRef}
@@ -66,15 +81,15 @@ export function HeroSection() {
         <motion.div
           initial={false}
           animate={{
-            opacity: showLogo ? 1 : 0,
-            scale: showLogo ? 1 : 0.85,
+            opacity: logoOpacity,
+            scale: 0.85 + logoOpacity * 0.15,
           }}
           transition={{
-            duration: 0.7,
+            duration: 0.35,
             ease: [0.22, 1, 0.36, 1],
           }}
           className="w-72 sm:w-80 md:w-96 lg:w-[28rem]"
-          aria-hidden={!showLogo}
+          aria-hidden={logoOpacity < 0.05}
         >
           <Image
             src="/LogoDallAgnol.png"
