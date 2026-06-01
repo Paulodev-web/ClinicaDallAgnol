@@ -6,7 +6,7 @@ const stats = [{ value: "+20", label: "anos de experiência" }];
 
 export function AuthorityBar() {
   return (
-    <section className="py-12 bg-section-alt border-y border-graysoft/60">
+    <section className="max-sm:mt-3 py-10 sm:mt-0 sm:py-12 bg-section-alt border-y border-graysoft/60 max-sm:border-t-0">
       <div className="container-brand">
         <motion.div
           initial={{ opacity: 0 }}
@@ -23,10 +23,10 @@ export function AuthorityBar() {
               transition={{ delay: i * 0.1 }}
               className="text-center"
             >
-              <span className="block text-2xl sm:text-3xl font-light text-primary">
+              <span className="block text-xl sm:text-3xl font-extralight tracking-wide text-primary">
                 {stat.value}
               </span>
-              <span className="text-ink-secondary text-sm sm:text-base">
+              <span className="text-ink-secondary text-xs sm:text-base font-light tracking-wide">
                 {stat.label}
               </span>
             </motion.div>

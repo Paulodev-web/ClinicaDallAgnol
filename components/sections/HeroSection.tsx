@@ -77,18 +77,19 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-4 pt-24">
+      {/* Logo: área abaixo do header no mobile para não cortar nem deslocar */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[4.5rem] z-10 flex items-center justify-center overflow-visible px-6 sm:inset-0 sm:top-0 sm:px-4 sm:pt-24">
         <motion.div
           initial={false}
           animate={{
             opacity: logoOpacity,
-            scale: 0.85 + logoOpacity * 0.15,
+            scale: 0.92 + logoOpacity * 0.08,
           }}
           transition={{
             duration: 0.35,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="w-72 sm:w-80 md:w-96 lg:w-[28rem]"
+          className="flex max-h-[min(38%,5.25rem)] w-auto max-w-[min(58vw,10.5rem)] items-center justify-center sm:max-h-none sm:max-w-none sm:w-64 md:w-80 lg:w-96"
           aria-hidden={logoOpacity < 0.05}
         >
           <Image
@@ -96,7 +97,7 @@ export function HeroSection() {
             alt="Dall Agnoll Odontologia"
             width={400}
             height={300}
-            className="h-auto w-full drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
+            className="h-auto max-h-full w-full object-contain object-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] sm:max-h-none"
             priority
           />
         </motion.div>
