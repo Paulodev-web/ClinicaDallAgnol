@@ -50,7 +50,7 @@ export default function EquipePage() {
         subtitle="Um corpo clínico multidisciplinar que une especialidades complementares para um diagnóstico de alta precisão."
       />
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-24">
             {teamMembers.map((member, i) => (
@@ -98,7 +98,7 @@ export default function EquipePage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

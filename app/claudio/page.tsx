@@ -138,7 +138,7 @@ export default function ClaudioPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -185,7 +185,7 @@ export default function ClaudioPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Formação"
@@ -213,7 +213,7 @@ export default function ClaudioPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Atuação"
@@ -253,7 +253,7 @@ export default function ClaudioPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div

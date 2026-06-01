@@ -17,7 +17,7 @@ export function FooterCTA() {
   const pageOrigin = pathname === "/" ? "home" : (pathname?.replace(/^\//, "") || "home");
 
   return (
-    <section className="py-24 bg-section-alt">
+    <section className="section-py bg-section-alt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div

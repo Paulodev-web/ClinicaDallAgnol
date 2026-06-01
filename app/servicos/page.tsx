@@ -153,7 +153,7 @@ export default function ServicosPage() {
         subtitle="Excelência em cada especialidade, com o padrão Dall'Agnol de qualidade."
       />
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-24">
             {highTicketServices.map((service, i) => (
@@ -207,7 +207,7 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Equipe multidisciplinar"
@@ -251,7 +251,7 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Atuação completa"
@@ -296,7 +296,7 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading tag="Dúvidas frequentes" title="Perguntas Frequentes" />
           <div className="space-y-6">

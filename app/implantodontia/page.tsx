@@ -242,7 +242,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -289,7 +289,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Soluções completas"
@@ -319,7 +319,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Por que escolher"
@@ -349,7 +349,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Passo a passo"
@@ -381,7 +381,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Longevidade do tratamento"
@@ -462,7 +462,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -516,7 +516,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tag="Dúvidas frequentes"
@@ -539,7 +539,7 @@ export default function ImplantodontiaPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-section-alt">
+      <section className="section-py bg-section-alt">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

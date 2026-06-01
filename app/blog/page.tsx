@@ -12,7 +12,7 @@ export default function BlogPage() {
         subtitle="Conteúdos sobre saúde bucal, estética e bem-estar — em breve."
       />
 
-      <section className="py-24 bg-page">
+      <section className="section-py bg-page">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

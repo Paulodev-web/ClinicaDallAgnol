@@ -45,13 +45,13 @@ const especialidades = [
 
 export function PillarsSection() {
   return (
-    <section className="py-24 bg-section-alt">
+    <section className="section-py bg-section-alt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <span className="inline-block text-primary-mid font-medium text-xs tracking-[0.14em] uppercase mb-3">
             Áreas de excelência

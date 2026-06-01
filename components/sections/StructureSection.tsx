@@ -23,13 +23,13 @@ const gallery = [
 
 export function StructureSection() {
   return (
-    <section className="py-24 bg-page">
+    <section className="section-py bg-page">
       <div className="container-brand">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <span className="inline-block text-primary-mid font-medium text-xs tracking-[0.14em] uppercase mb-3">
             Por dentro da clínica

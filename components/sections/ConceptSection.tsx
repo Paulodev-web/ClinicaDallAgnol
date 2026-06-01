@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function ConceptSection() {
   return (
-    <section className="py-24 bg-page">
+    <section className="section-py bg-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <motion.div
