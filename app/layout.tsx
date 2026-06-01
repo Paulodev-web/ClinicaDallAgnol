@@ -1,7 +1,22 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Playfair_Display, Great_Vibes } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display, Great_Vibes, Raleway, Inter } from "next/font/google";
 import "./globals.css";
 import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
+
+// Identidade Dallagnol: Raleway (headings, weight leve) + Inter (corpo)
+const raleway = Raleway({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-raleway",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -32,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${plusJakarta.variable} ${playfairDisplay.variable} ${greatVibes.variable} font-sans antialiased`}>
+      <body className={`${raleway.variable} ${inter.variable} ${plusJakarta.variable} ${playfairDisplay.variable} ${greatVibes.variable} font-sans antialiased`}>
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>

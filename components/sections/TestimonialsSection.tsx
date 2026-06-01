@@ -7,10 +7,9 @@ import { Star } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "A experiência superou todas as expectativas. O resultado foi natural e refinado.",
-    author: "Maria S.",
-    role: "Lentes de Contato",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face",
+      "Desde o início senti segurança e transparência em um caso que não era fácil. Sinto não só um sorriso perfeito, muito além das minhas expectativas, mas a volta da autoestima e a vontade de sorrir sem vergonha. Recomendo de olhos fechados — fui acolhida do início ao fim por toda a equipe e pelo Dr. Cláudio.",
+    author: "Cauane Soares",
+    role: "Reabilitação Oral",
     stars: 5,
   },
   {
@@ -52,7 +51,7 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white rounded-xl p-5 border border-[#e2e8f0] shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06),0_8px_16px_-6px_rgba(0,0,0,0.04)] h-full flex flex-col relative overflow-hidden flex-shrink-0 w-[85vw] max-w-[340px] md:w-auto md:max-w-none snap-center"
+      className="bg-surface rounded-xl p-5 border border-graysoft/60 shadow-brand-md h-full flex flex-col relative overflow-hidden flex-shrink-0 w-[85vw] max-w-[340px] md:w-auto md:max-w-none snap-center"
     >
       {/* Aspas de fundo com opacidade baixa */}
       <div
@@ -72,21 +71,32 @@ function TestimonialCard({
         ))}
       </div>
 
-      <p className="text-gray-600 mb-4 text-sm sm:text-base italic leading-relaxed relative z-10">
+      <p className="text-ink-secondary mb-4 text-sm sm:text-base italic leading-relaxed relative z-10">
         &ldquo;{testimonial.quote}&rdquo;
       </p>
 
       <div className="mt-auto flex items-center gap-4">
-        <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <Image
-            src={testimonial.image}
-            alt={testimonial.author}
-            fill
-            className="object-cover"
-          />
+        <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-primary/10 flex items-center justify-center">
+          {testimonial.image ? (
+            <Image
+              src={testimonial.image}
+              alt={testimonial.author}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <span className="text-sm font-medium text-primary">
+              {testimonial.author
+                .split(" ")
+                .map((part) => part[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase()}
+            </span>
+          )}
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-gray-900">{testimonial.author}</p>
+          <p className="font-medium text-ink">{testimonial.author}</p>
           <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
             {testimonial.role}
           </span>
@@ -98,7 +108,7 @@ function TestimonialCard({
 
 export function TestimonialsSection() {
   return (
-    <section className="py-14 bg-gray-50">
+    <section className="py-14 bg-section-alt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -106,7 +116,7 @@ export function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#e2e8f0] shadow-sm mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-graysoft/60 shadow-brand-sm mb-4">
             <svg
               className="w-5 h-5"
               viewBox="0 0 24 24"
@@ -130,15 +140,15 @@ export function TestimonialsSection() {
                 fill="#EA4335"
               />
             </svg>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-ink-secondary">
               4.9/5 estrelas no Google
             </span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl sm:text-3xl font-light text-ink mb-2">
             Depoimentos
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-ink-secondary max-w-2xl mx-auto text-sm sm:text-base">
             O que nossos pacientes dizem sobre a experiência na clínica
           </p>
         </motion.div>

@@ -11,6 +11,7 @@ interface ButtonProps {
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 export function Button({
@@ -21,15 +22,16 @@ export function Button({
   className = "",
   onClick,
   type = "button",
+  disabled = false,
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white";
+    "inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none";
 
   const variants = {
     primary:
-      "bg-primary text-dark-900 hover:bg-primary/90 hover:scale-105 active:scale-100",
+      "bg-primary text-white uppercase tracking-wide hover:bg-primary-hover hover:shadow-brand-md active:scale-100",
     outline:
-      "border-2 border-primary text-primary hover:bg-primary hover:text-dark-900",
+      "border border-primary-light text-primary uppercase tracking-wide hover:bg-primary-xlight hover:border-primary-mid",
     ghost: "text-primary hover:bg-primary/10",
   };
 
@@ -73,7 +75,7 @@ export function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {content}
     </button>
   );

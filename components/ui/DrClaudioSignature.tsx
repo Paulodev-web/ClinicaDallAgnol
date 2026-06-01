@@ -7,7 +7,7 @@
 export function DrClaudioSignature({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`font-signature text-2xl sm:text-3xl text-zinc-700 ${className}`}
+      className={`font-signature text-2xl sm:text-3xl text-ink-secondary ${className}`}
       style={{ fontFamily: "var(--font-signature), cursive" }}
     >
       Dr. Claudio Dall&apos;Agnol

@@ -3,6 +3,7 @@ import { AuthorityBar } from "@/components/sections/AuthorityBar";
 import { ConceptSection } from "@/components/sections/ConceptSection";
 import { PillarsSection } from "@/components/sections/PillarsSection";
 import { TechSection } from "@/components/sections/TechSection";
+import { StructureSection } from "@/components/sections/StructureSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FooterCTA } from "@/components/sections/FooterCTA";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <ConceptSection />
       <PillarsSection />
       <TechSection />
+      <StructureSection />
       <TestimonialsSection />
       <FooterCTA />
     </>

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function ConceptSection() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <motion.div
@@ -29,19 +29,21 @@ export function ConceptSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl sm:text-4xl font-light text-ink mb-6">
               O Conceito Dall&apos;Agnol
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              A clínica é uma extensão do rigor técnico do Dr. Claudio. Ao longo
-              dos anos, evoluímos para um ecossistema multidisciplinar onde a
-              excelência não é exceção — é o padrão.
+            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+              Ao longo dos anos, evoluímos para um ecossistema multidisciplinar
+              onde a excelência não é exceção — é o padrão. Um corpo clínico de
+              especialistas complementares, cada um dedicado à sua área de
+              expertise.
             </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Mesmo quando outro profissional executa o procedimento, o padrão de
-              qualidade é o mesmo: planejamento compartilhado, protocolos
-              rigorosos e resultados que refletem a filosofia de cuidado que
-              atravessa toda a equipe.
+            <p className="text-ink-secondary text-lg leading-relaxed">
+              O que nos une é uma filosofia de cuidado institucional: planejamento
+              compartilhado, protocolos rigorosos e interconsulta entre
+              profissionais. Cada tratamento é conduzido por quem domina aquela
+              especialidade — com a confiança de uma equipe que pensa o caso em
+              conjunto.
             </p>
           </motion.div>
         </div>

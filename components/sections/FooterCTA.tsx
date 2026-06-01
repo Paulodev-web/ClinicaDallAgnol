@@ -17,10 +17,7 @@ export function FooterCTA() {
   const pageOrigin = pathname === "/" ? "home" : (pathname?.replace(/^\//, "") || "home");
 
   return (
-    <section
-      className="py-24"
-      style={{ backgroundColor: "#F8FAFC" }}
-    >
+    <section className="py-24 bg-section-alt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -28,10 +25,10 @@ export function FooterCTA() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl sm:text-4xl font-light text-ink mb-6">
               Pronto para elevar o seu sorriso ao próximo nível?
             </h2>
-            <p className="text-gray-600 text-lg mb-8">
+            <p className="text-ink-secondary text-lg mb-8">
               Nossa equipe está pronta para recebê-lo. Entre em contato e inicie
               sua jornada para um sorriso extraordinário.
             </p>
@@ -44,7 +41,7 @@ export function FooterCTA() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick(pageOrigin)}
-                className="inline-flex items-center justify-center rounded-lg border-2 border-gray-300 px-6 py-3 text-base font-medium text-gray-700 transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-50/50 hover:text-emerald-700"
+                className="inline-flex items-center justify-center rounded-lg border-2 border-graysoft px-6 py-3 text-base font-medium text-ink-secondary transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-50/50 hover:text-emerald-700"
               >
                 Fale com o Dr. Claudio
               </a>
@@ -57,7 +54,7 @@ export function FooterCTA() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="rounded-2xl overflow-hidden border border-gray-200/80 bg-white group">
+            <div className="rounded-2xl overflow-hidden border border-graysoft/60 bg-surface shadow-brand-md group">
               <div className="relative aspect-video">
                 <iframe
                   src={MAPS_EMBED_URL}
@@ -79,13 +76,13 @@ export function FooterCTA() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 pt-16 border-t border-gray-200/80"
+          className="mt-16 pt-16 border-t border-graysoft/60"
         >
           <div className="grid sm:grid-cols-2 gap-10">
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <MapPin className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-medium text-ink">
                   Endereço
                 </h3>
               </div>
@@ -93,7 +90,7 @@ export function FooterCTA() {
                 href={MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#64748b] hover:text-primary transition-colors leading-relaxed block"
+                className="text-ink-secondary hover:text-primary transition-colors leading-relaxed block"
               >
                 {ADDRESS}
               </a>
@@ -101,7 +98,7 @@ export function FooterCTA() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Clock className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-medium text-ink">
                   Horários de Atendimento
                 </h3>
               </div>
@@ -111,8 +108,8 @@ export function FooterCTA() {
                     key={item.days}
                     className="flex flex-wrap items-baseline gap-2"
                   >
-                    <span className="font-bold text-gray-900">{item.days}:</span>
-                    <span className="text-[#64748b]">{item.hours}</span>
+                    <span className="font-medium text-ink">{item.days}:</span>
+                    <span className="text-ink-secondary">{item.hours}</span>
                   </div>
                 ))}
               </div>

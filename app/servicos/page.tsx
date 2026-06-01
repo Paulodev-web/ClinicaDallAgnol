@@ -1,6 +1,7 @@
 "use client";
 
 import { PageHero } from "@/components/sections/PageHero";
+import { FooterCTA } from "@/components/sections/FooterCTA";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -22,7 +23,8 @@ const highTicketServices = [
     copy: "A união entre a ciência da saúde e a arte do sorriso.",
     description:
       "Transformação do sorriso com precisão e naturalidade. Cada caso é planejado com análise facial, visagismo e mock-up digital para resultados harmoniosos e duradouros.",
-    image: "/Lente-de-contato-dental-estraga-os-dentes.webp",
+    image: "/FotoFaceta.jpeg",
+    imageClass: "object-cover object-[center_50%]",
   },
   {
     id: "implantodontia",
@@ -30,7 +32,7 @@ const highTicketServices = [
     copy: "Reabilitação oral com tecnologia de ponta.",
     description:
       "Procedimentos de implantes com planejamento digital. Resultados previsíveis e duradouros para recuperar função e estética.",
-    image: "/Implantes.jpg",
+    image: "/modelo-protese-implante-1.jpeg",
   },
 ];
 
@@ -119,6 +121,30 @@ const faqItems = [
   },
 ];
 
+function SectionHeading({
+  tag,
+  title,
+  subtitle,
+}: {
+  tag?: string;
+  title: string;
+  subtitle?: string;
+}) {
+  return (
+    <div className="text-center mb-16">
+      {tag && (
+        <span className="inline-block text-primary-mid font-medium text-xs tracking-[0.14em] uppercase mb-3">
+          {tag}
+        </span>
+      )}
+      <h2 className="text-3xl sm:text-4xl font-light text-ink mb-4">{title}</h2>
+      {subtitle && (
+        <p className="text-ink-secondary max-w-2xl mx-auto text-lg">{subtitle}</p>
+      )}
+    </div>
+  );
+}
+
 export default function ServicosPage() {
   return (
     <>
@@ -127,7 +153,7 @@ export default function ServicosPage() {
         subtitle="Excelência em cada especialidade, com o padrão Dall'Agnol de qualidade."
       />
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-24">
             {highTicketServices.map((service, i) => (
@@ -140,30 +166,37 @@ export default function ServicosPage() {
                 className="grid lg:grid-cols-2 gap-16 items-center"
               >
                 <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                  <h3 className="text-2xl font-bold text-primary mb-4">
+                  <h3 className="text-2xl font-light text-ink mb-4">
                     {service.title}
                   </h3>
-                  <p className="text-xl text-gray-600 mb-6">{service.copy}</p>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-xl text-ink-secondary mb-6">{service.copy}</p>
+                  <p className="text-ink-secondary leading-relaxed">
                     {service.description}
                   </p>
-                  <Button
-                    href="/contato"
-                    variant="primary"
-                    size="md"
-                    className="mt-8"
-                  >
-                    Solicitar avaliação com o especialista
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                    {service.id === "facetas" && (
+                      <Button href="/facetas" variant="outline" size="md">
+                        Saiba mais sobre facetas
+                      </Button>
+                    )}
+                    {service.id === "implantodontia" && (
+                      <Button href="/implantodontia" variant="outline" size="md">
+                        Saiba mais sobre implantodontia
+                      </Button>
+                    )}
+                    <Button href="/contato" variant="primary" size="md">
+                      Solicitar avaliação com o especialista
+                    </Button>
+                  </div>
                 </div>
                 <div className={i % 2 === 1 ? "lg:order-1" : ""}>
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-graysoft/60 shadow-brand-md">
                     <Image
                       src={service.image}
                       alt={service.title}
                       fill
                       quality={90}
-                      className="object-cover"
+                      className={service.imageClass ?? "object-cover"}
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                   </div>
@@ -174,22 +207,23 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">
-            Especialidades da Equipe
-          </h2>
-          <div className="grid md:grid-cols-2 gap-12">
-            {delegatedServices.map((service, i) => (
+          <SectionHeading
+            tag="Equipe multidisciplinar"
+            title="Especialidades da Equipe"
+          />
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
+            {delegatedServices.map((service) => (
               <motion.div
                 key={service.id}
                 id={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl overflow-hidden border border-gray-200"
+                className="flex flex-col h-full bg-surface rounded-2xl overflow-hidden border border-graysoft/60 shadow-brand-md"
               >
-                <div className="relative aspect-[4/3]">
+                <div className="relative aspect-[4/3] shrink-0">
                   <Image
                     src={service.image}
                     alt={service.title}
@@ -199,15 +233,15 @@ export default function ServicosPage() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
-                <div className="p-8">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                <div className="flex flex-1 flex-col p-8">
+                  <h3 className="text-xl font-medium text-ink mb-4">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 mb-4">{service.copy}</p>
-                  <p className="text-gray-600 leading-relaxed mb-6">
+                  <p className="text-ink-secondary mb-4">{service.copy}</p>
+                  <p className="text-ink-secondary leading-relaxed mb-6 flex-1">
                     {service.description}
                   </p>
-                  <Button href="/contato" variant="outline" size="sm">
+                  <Button href="/contato" variant="outline" size="sm" className="self-start">
                     Solicitar avaliação
                   </Button>
                 </div>
@@ -217,33 +251,41 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-page">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">
-            Nossa Atuação Completa
-          </h2>
+          <SectionHeading
+            tag="Atuação completa"
+            title="Nossa Atuação Completa"
+            subtitle="Soluções para cada necessidade em saúde bucal."
+          />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {secondarySpecialties.map((item, i) => (
               <motion.div
                 key={item.id}
+                id={item.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="flex flex-col items-center text-center p-6 rounded-2xl border border-gray-200 bg-gray-50/50 hover:border-primary/30 hover:bg-white transition-all duration-300"
+                className="scroll-mt-24 flex flex-col items-center text-center p-6 rounded-2xl border border-graysoft/60 bg-surface shadow-brand-sm hover:border-primary/30 hover:shadow-brand-md transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
                   <item.icon className="w-7 h-7" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <h3 className="font-medium text-ink mb-2">{item.title}</h3>
+                <p className="text-ink-secondary text-sm leading-relaxed mb-4">
                   {item.description}
                 </p>
+                {item.id === "periodontia" && (
+                  <Button href="/periodontia" variant="outline" size="sm">
+                    Saiba mais sobre periodontia
+                  </Button>
+                )}
               </motion.div>
             ))}
           </div>
           <div className="mt-16 text-center">
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <p className="text-ink-secondary mb-6 max-w-2xl mx-auto">
               Oferecemos soluções completas para a sua saúde bucal. Caso não
               encontre a especialidade procurada, consulte nossa equipe.
             </p>
@@ -254,11 +296,9 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-section-alt">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            Perguntas Frequentes
-          </h2>
+          <SectionHeading tag="Dúvidas frequentes" title="Perguntas Frequentes" />
           <div className="space-y-6">
             {faqItems.map((item, i) => (
               <motion.div
@@ -266,26 +306,17 @@ export default function ServicosPage() {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl p-6 border border-gray-200"
+                className="bg-surface rounded-xl p-6 border border-graysoft/60 shadow-brand-sm"
               >
-                <h4 className="font-semibold text-gray-900 mb-2">{item.q}</h4>
-                <p className="text-gray-600">{item.a}</p>
+                <h4 className="font-medium text-ink mb-2">{item.q}</h4>
+                <p className="text-ink-secondary">{item.a}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-gray-50 border-t border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600 mb-6">
-            Pronto para iniciar sua jornada?
-          </p>
-          <Button href="/contato" variant="primary" size="lg">
-            Solicitar avaliação com o especialista desta área
-          </Button>
-        </div>
-      </section>
+      <FooterCTA />
     </>
   );
 }
