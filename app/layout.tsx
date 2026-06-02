@@ -38,6 +38,10 @@ export const metadata: Metadata = {
   title: "Dall Agnol | Odontologia de Excelência",
   description:
     "Um ecossistema completo de saúde oral focado em alta performance estética e funcional, liderado pelo Dr. Claudio Dall'Agnol.",
+  icons: {
+    icon: "/LogoDallAgnol.png",
+    apple: "/LogoDallAgnol.png",
+  },
 };
 
 export default function RootLayout({
