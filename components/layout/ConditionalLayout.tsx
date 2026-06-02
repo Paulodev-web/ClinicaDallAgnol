@@ -14,13 +14,17 @@ export function ConditionalLayout({
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
 
+  if (isAdmin) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <TrackVisit />
-      {!isAdmin && <Header />}
-      <main className={!isAdmin ? "pt-20" : ""}>{children}</main>
-      {!isAdmin && <Footer />}
-      {!isAdmin && <WhatsAppButton />}
+      <Header />
+      <main className="pt-20">{children}</main>
+      <Footer />
+      <WhatsAppButton />
     </>
   );
 }

@@ -5,6 +5,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   cover_image_url: string | null;
+  hero_subtitle: string | null;
   author: string | null;
   published: boolean;
   published_at: string | null;
@@ -15,7 +16,14 @@ export interface BlogPost {
 
 export type BlogPostListItem = Pick<
   BlogPost,
-  "id" | "title" | "slug" | "excerpt" | "cover_image_url" | "published_at" | "author"
+  | "id"
+  | "title"
+  | "slug"
+  | "excerpt"
+  | "cover_image_url"
+  | "hero_subtitle"
+  | "published_at"
+  | "author"
 >;
 
 export type BlogPostAdmin = BlogPost;

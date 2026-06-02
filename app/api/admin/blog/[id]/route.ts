@@ -28,10 +28,18 @@ export async function PATCH(
       return NextResponse.json({ error: "Postagem não encontrada" }, { status: 404 });
     }
 
+    const coverUrl =
+      body.cover_image_url !== undefined
+        ? body.cover_image_url
+          ? String(body.cover_image_url).trim()
+          : null
+        : existing.cover_image_url;
+
     const merged = {
       title: body.title !== undefined ? String(body.title) : existing.title,
       excerpt: body.excerpt !== undefined ? String(body.excerpt) : existing.excerpt,
       content: body.content !== undefined ? String(body.content) : existing.content,
+      cover_image_url: coverUrl,
       published:
         body.published !== undefined ? !!body.published : existing.published,
     };
@@ -54,12 +62,16 @@ export async function PATCH(
     if (body.author !== undefined) {
       updates.author = body.author ? String(body.author).trim() : null;
     }
+    if (body.hero_subtitle !== undefined) {
+      updates.hero_subtitle = body.hero_subtitle
+        ? String(body.hero_subtitle).trim()
+        : null;
+    }
     if (body.published !== undefined) {
       updates.published = merged.published;
-      if (merged.published && !existing.published_at) {
-        updates.published_at = new Date().toISOString();
-      }
-      if (!merged.published) {
+      if (merged.published) {
+        updates.published_at = existing.published_at ?? new Date().toISOString();
+      } else {
         updates.published_at = null;
       }
     }

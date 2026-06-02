@@ -98,18 +98,32 @@ export default function AdminDashboardPage() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000);
+
     try {
       const res = await fetch(`/api/admin/dashboard?days=${periodDays}`, {
         cache: "no-store",
         headers: { "Cache-Control": "no-cache" },
+        signal: controller.signal,
       });
-      if (!res.ok) throw new Error("Erro ao carregar");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(
+          typeof body.error === "string" ? body.error : `Erro ao carregar (${res.status})`
+        );
+      }
       const json = await res.json();
       if (json.error) throw new Error(json.error);
       setData(json);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao conectar");
+      if (err instanceof Error && err.name === "AbortError") {
+        setError("Tempo esgotado ao carregar o dashboard. Tente atualizar a página.");
+      } else {
+        setError(err instanceof Error ? err.message : "Erro ao conectar");
+      }
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   }, [periodDays]);
@@ -118,10 +132,27 @@ export default function AdminDashboardPage() {
     fetchData();
   }, [fetchData]);
 
-  if (loading && !data) {
+  if (loading && !data && !error) {
     return (
-      <div className="flex items-center justify-center min-h-[70vh]">
+      <div className="flex flex-col items-center justify-center min-h-[70vh] gap-4 p-8">
         <Loader2 className="w-12 h-12 animate-spin text-primary" />
+        <p className="text-slate-500 text-sm">Carregando dashboard...</p>
+      </div>
+    );
+  }
+
+  if (error && !data) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[70vh] gap-4 p-8 max-w-md mx-auto text-center">
+        <AlertCircle className="w-12 h-12 text-red-500" />
+        <p className="text-slate-800 font-medium">{error}</p>
+        <button
+          type="button"
+          onClick={fetchData}
+          className="px-4 py-2 rounded-xl bg-primary text-white text-sm font-medium"
+        >
+          Tentar novamente
+        </button>
       </div>
     );
   }

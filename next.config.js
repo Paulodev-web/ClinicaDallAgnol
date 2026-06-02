@@ -4,6 +4,13 @@ const supabaseHostname = process.env.NEXT_PUBLIC_SUPABASE_URL
   : null;
 
 const nextConfig = {
+  webpack: (config, { dev }) => {
+    // Evita cache webpack corrompido no Windows (404 em chunks/CSS)
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
   images: {
     remotePatterns: [
       {

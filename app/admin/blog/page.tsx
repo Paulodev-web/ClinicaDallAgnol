@@ -10,11 +10,25 @@ import {
   Pencil,
   Trash2,
   ExternalLink,
-  Upload,
-  X,
+  Globe,
 } from "lucide-react";
 import type { BlogPostAdmin } from "@/lib/blog/types";
-import { slugify } from "@/lib/blog/slug";
+import {
+  BlogPostEditor,
+  type BlogEditorFormState,
+} from "@/components/admin/BlogPostEditor";
+
+const defaultForm = (): BlogEditorFormState => ({
+  title: "",
+  slug: "",
+  slugManual: false,
+  heroSubtitle: "",
+  excerpt: "",
+  content: "",
+  author: "Clínica Dall'Agnol",
+  coverUrl: "",
+  published: true,
+});
 
 function formatDate(dateStr: string | null) {
   if (!dateStr) return "—";
@@ -30,16 +44,9 @@ export default function AdminBlogPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [showForm, setShowForm] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formTitle, setFormTitle] = useState("");
-  const [formSlug, setFormSlug] = useState("");
-  const [formSlugManual, setFormSlugManual] = useState(false);
-  const [formExcerpt, setFormExcerpt] = useState("");
-  const [formContent, setFormContent] = useState("");
-  const [formAuthor, setFormAuthor] = useState("Clínica Dall'Agnol");
-  const [formCoverUrl, setFormCoverUrl] = useState("");
-  const [formPublished, setFormPublished] = useState(false);
+  const [form, setForm] = useState<BlogEditorFormState>(defaultForm);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -65,42 +72,35 @@ export default function AdminBlogPage() {
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    if (!formSlugManual && formTitle && !editingId) {
-      setFormSlug(slugify(formTitle));
-    }
-  }, [formTitle, formSlugManual, editingId]);
-
-  const resetForm = () => {
-    setEditingId(null);
-    setFormTitle("");
-    setFormSlug("");
-    setFormSlugManual(false);
-    setFormExcerpt("");
-    setFormContent("");
-    setFormAuthor("Clínica Dall'Agnol");
-    setFormCoverUrl("");
-    setFormPublished(false);
-    setFormError(null);
-  };
-
   const openCreate = () => {
-    resetForm();
-    setShowForm(true);
+    setEditingId(null);
+    setForm(defaultForm());
+    setFormError(null);
+    setEditing(true);
   };
 
   const openEdit = (post: BlogPostAdmin) => {
     setEditingId(post.id);
-    setFormTitle(post.title);
-    setFormSlug(post.slug);
-    setFormSlugManual(true);
-    setFormExcerpt(post.excerpt);
-    setFormContent(post.content);
-    setFormAuthor(post.author || "");
-    setFormCoverUrl(post.cover_image_url || "");
-    setFormPublished(post.published);
+    setForm({
+      title: post.title,
+      slug: post.slug,
+      slugManual: true,
+      heroSubtitle: post.hero_subtitle || "",
+      excerpt: post.excerpt,
+      content: post.content,
+      author: post.author || "",
+      coverUrl: post.cover_image_url || "",
+      published: post.published,
+    });
     setFormError(null);
-    setShowForm(true);
+    setEditing(true);
+  };
+
+  const closeEditor = () => {
+    setEditing(false);
+    setEditingId(null);
+    setForm(defaultForm());
+    setFormError(null);
   };
 
   const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +114,7 @@ export default function AdminBlogPage() {
       const res = await fetch("/api/admin/blog/upload", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Erro no upload");
-      setFormCoverUrl(data.url);
+      setForm((prev) => ({ ...prev, coverUrl: data.url }));
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "Erro no upload");
     } finally {
@@ -123,18 +123,19 @@ export default function AdminBlogPage() {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (publish: boolean) => {
     setSaving(true);
     setFormError(null);
     try {
       const payload = {
-        title: formTitle,
-        slug: formSlug,
-        excerpt: formExcerpt,
-        content: formContent,
-        author: formAuthor || null,
-        cover_image_url: formCoverUrl || null,
-        published: formPublished,
+        title: form.title,
+        slug: form.slug,
+        excerpt: form.excerpt,
+        hero_subtitle: form.heroSubtitle || null,
+        content: form.content,
+        author: form.author || null,
+        cover_image_url: form.coverUrl || null,
+        published: publish,
       };
 
       const res = await fetch(
@@ -148,11 +149,44 @@ export default function AdminBlogPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Erro ao salvar");
 
-      setShowForm(false);
-      resetForm();
+      closeEditor();
       await fetchPosts();
+      if (publish) {
+        alert(`Publicado! Veja em /blog e em /blog/${data.slug}`);
+      } else {
+        alert("Rascunho salvo. Use «Publicar no site» para aparecer em /blog.");
+      }
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "Erro ao salvar");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleQuickPublish = async (post: BlogPostAdmin) => {
+    if (!post.cover_image_url) {
+      alert("Adicione uma imagem de capa antes de publicar.");
+      openEdit(post);
+      return;
+    }
+    if (!post.content?.trim()) {
+      alert("Adicione o conteúdo do artigo antes de publicar.");
+      openEdit(post);
+      return;
+    }
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/admin/blog/${post.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ published: true }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Erro ao publicar");
+      await fetchPosts();
+      alert(`Publicado! Abra /blog ou /blog/${post.slug}`);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Erro ao publicar");
     } finally {
       setSaving(false);
     }
@@ -172,13 +206,32 @@ export default function AdminBlogPage() {
     }
   };
 
+  if (editing) {
+    return (
+      <div className="p-6 lg:p-8">
+        <BlogPostEditor
+          editingId={editingId}
+          form={form}
+          setForm={setForm}
+          formError={formError}
+          saving={saving}
+          uploading={uploading}
+          onCoverUpload={handleCoverUpload}
+          onSaveDraft={() => handleSave(false)}
+          onPublish={() => handleSave(true)}
+          onCancel={closeEditor}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 lg:p-8 max-w-6xl">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Blog</h1>
           <p className="text-slate-500 text-sm mt-1">
-            Crie e edite artigos exibidos em /blog
+            Cada postagem vira um card em /blog e uma página completa no site
           </p>
         </div>
         <div className="flex gap-2">
@@ -197,7 +250,7 @@ export default function AdminBlogPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary/90"
           >
             <Plus className="w-4 h-4" />
-            Nova postagem
+            Nova página
           </button>
         </div>
       </div>
@@ -215,7 +268,7 @@ export default function AdminBlogPage() {
         </div>
       ) : posts.length === 0 ? (
         <div className="text-center py-16 text-slate-500 bg-white rounded-2xl border border-slate-200">
-          Nenhuma postagem ainda. Clique em &quot;Nova postagem&quot; para começar.
+          Nenhuma postagem ainda. Clique em &quot;Nova página&quot; para começar.
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
@@ -226,7 +279,7 @@ export default function AdminBlogPage() {
                   <th className="px-4 py-3 font-medium">Capa</th>
                   <th className="px-4 py-3 font-medium">Título</th>
                   <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 font-medium">Publicado em</th>
+                  <th className="px-4 py-3 font-medium">No site</th>
                   <th className="px-4 py-3 font-medium text-right">Ações</th>
                 </tr>
               </thead>
@@ -234,14 +287,14 @@ export default function AdminBlogPage() {
                 {posts.map((post) => (
                   <tr key={post.id} className="border-b border-slate-100 last:border-0">
                     <td className="px-4 py-3">
-                      <div className="relative w-14 h-10 rounded-lg overflow-hidden bg-slate-100">
+                      <div className="relative w-16 h-11 rounded-lg overflow-hidden bg-slate-100">
                         {post.cover_image_url ? (
                           <Image
                             src={post.cover_image_url}
                             alt=""
                             fill
                             className="object-cover"
-                            sizes="56px"
+                            sizes="64px"
                           />
                         ) : null}
                       </div>
@@ -258,7 +311,7 @@ export default function AdminBlogPage() {
                             : "bg-amber-100 text-amber-800"
                         }`}
                       >
-                        {post.published ? "Publicado" : "Rascunho"}
+                        {post.published ? "Publicado" : "Rascunho — não aparece em /blog"}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-slate-600">
@@ -266,6 +319,18 @@ export default function AdminBlogPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-end gap-1">
+                        {!post.published && (
+                          <button
+                            type="button"
+                            onClick={() => handleQuickPublish(post)}
+                            disabled={saving}
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-medium hover:bg-emerald-700 disabled:opacity-60"
+                            title="Publicar no site"
+                          >
+                            <Globe className="w-3.5 h-3.5" />
+                            Publicar
+                          </button>
+                        )}
                         {post.published && (
                           <a
                             href={`/blog/${post.slug}`}
@@ -299,166 +364,6 @@ export default function AdminBlogPage() {
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-      )}
-
-      {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-slate-900">
-                {editingId ? "Editar postagem" : "Nova postagem"}
-              </h2>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowForm(false);
-                  resetForm();
-                }}
-                className="p-2 rounded-lg hover:bg-slate-100 text-slate-500"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-4">
-              {formError && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 text-red-700 text-sm">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                  {formError}
-                </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Título *
-                </label>
-                <input
-                  type="text"
-                  value={formTitle}
-                  onChange={(e) => setFormTitle(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Slug (URL)
-                </label>
-                <input
-                  type="text"
-                  value={formSlug}
-                  onChange={(e) => {
-                    setFormSlugManual(true);
-                    setFormSlug(e.target.value);
-                  }}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono"
-                  placeholder="meu-artigo"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Resumo (card) *
-                </label>
-                <textarea
-                  value={formExcerpt}
-                  onChange={(e) => setFormExcerpt(e.target.value)}
-                  rows={2}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Autor
-                </label>
-                <input
-                  type="text"
-                  value={formAuthor}
-                  onChange={(e) => setFormAuthor(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Imagem de capa
-                </label>
-                {formCoverUrl && (
-                  <div className="relative w-full h-40 rounded-xl overflow-hidden mb-2 bg-slate-100">
-                    <Image
-                      src={formCoverUrl}
-                      alt="Capa"
-                      fill
-                      className="object-cover"
-                      sizes="640px"
-                    />
-                  </div>
-                )}
-                <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 cursor-pointer hover:bg-slate-50">
-                  {uploading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Upload className="w-4 h-4" />
-                  )}
-                  {uploading ? "Enviando..." : "Enviar imagem"}
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,image/gif"
-                    className="hidden"
-                    onChange={handleCoverUpload}
-                    disabled={uploading}
-                  />
-                </label>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Conteúdo (Markdown)
-                </label>
-                <textarea
-                  value={formContent}
-                  onChange={(e) => setFormContent(e.target.value)}
-                  rows={12}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono resize-y"
-                  placeholder="## Título da seção&#10;&#10;Texto do artigo..."
-                />
-              </div>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formPublished}
-                  onChange={(e) => setFormPublished(e.target.checked)}
-                  className="rounded border-slate-300"
-                />
-                <span className="text-sm text-slate-700">Publicar no site</span>
-              </label>
-            </div>
-
-            <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowForm(false);
-                  resetForm();
-                }}
-                className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 text-sm"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
-                onClick={handleSave}
-                disabled={saving}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-medium disabled:opacity-60"
-              >
-                {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-                Salvar
-              </button>
-            </div>
           </div>
         </div>
       )}

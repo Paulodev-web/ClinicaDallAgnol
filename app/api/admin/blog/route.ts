@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       excerpt,
       content,
       cover_image_url,
+      hero_subtitle,
       author,
       published,
     } = body;
@@ -45,6 +46,7 @@ export async function POST(request: NextRequest) {
       title,
       excerpt,
       content,
+      cover_image_url,
       published: !!published,
     });
     if (validationError) {
@@ -64,6 +66,7 @@ export async function POST(request: NextRequest) {
         excerpt: String(excerpt).trim(),
         content: content ? String(content) : "",
         cover_image_url: cover_image_url ? String(cover_image_url).trim() : null,
+        hero_subtitle: hero_subtitle ? String(hero_subtitle).trim() : null,
         author: author ? String(author).trim() : null,
         published: isPublished,
         published_at: isPublished ? now : null,

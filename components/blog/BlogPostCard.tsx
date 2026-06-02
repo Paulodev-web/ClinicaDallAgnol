@@ -49,7 +49,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           {post.title}
         </h2>
         <p className="text-ink-secondary text-sm leading-relaxed line-clamp-3 flex-1">
-          {post.excerpt}
+          {post.hero_subtitle || post.excerpt}
         </p>
         {post.author && (
           <p className="text-xs text-ink-secondary/80 mt-4">{post.author}</p>

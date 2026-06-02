@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS public.blog_posts (
   content text NOT NULL DEFAULT '',
   cover_image_url text,
   author text,
+  hero_subtitle text,
   published boolean NOT NULL DEFAULT false,
   published_at timestamptz,
   created_by uuid REFERENCES auth.users(id) ON DELETE SET NULL,
