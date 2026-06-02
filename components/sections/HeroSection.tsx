@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
@@ -12,8 +12,10 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 );
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
-const FALLBACK_ASPECT = 16 / 9;
-const HERO_VIDEO = "/VideoAbertura.MOV";
+const DESKTOP_FALLBACK_ASPECT = 16 / 9;
+const MOBILE_FALLBACK_ASPECT = 464 / 832;
+const HERO_VIDEO_DESKTOP = "/VideoAbertura.MOV";
+const HERO_VIDEO_MOBILE = "/VideoAberturamobile.mp4";
 
 /** Segundos iniciais: logo visível com fade out. */
 const LOGO_AT_START_SECONDS = 2.5;
@@ -38,17 +40,30 @@ function logoOpacityAtTime(currentTime: number, duration: number): number {
 }
 
 export function HeroSection() {
-  const setVideoRef = useAutoplayVideo();
-  const [aspectRatio, setAspectRatio] = useState<number | null>(null);
+  const setDesktopVideoRef = useAutoplayVideo();
+  const setMobileVideoRef = useAutoplayVideo();
+  const [desktopAspect, setDesktopAspect] = useState<number | null>(null);
+  const [mobileAspect, setMobileAspect] = useState<number | null>(null);
   const [logoOpacity, setLogoOpacity] = useState(1);
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [desktopVideoFailed, setDesktopVideoFailed] = useState(false);
+  const [mobileVideoFailed, setMobileVideoFailed] = useState(false);
 
-  const onMetadataLoaded = useCallback(
+  const onDesktopMetadataLoaded = useCallback(
     (e: React.SyntheticEvent<HTMLVideoElement>) => {
       const video = e.currentTarget;
       if (!video.videoWidth || !video.videoHeight) return;
-      setAspectRatio(video.videoWidth / video.videoHeight);
-      setVideoFailed(false);
+      setDesktopAspect(video.videoWidth / video.videoHeight);
+      setDesktopVideoFailed(false);
+    },
+    []
+  );
+
+  const onMobileMetadataLoaded = useCallback(
+    (e: React.SyntheticEvent<HTMLVideoElement>) => {
+      const video = e.currentTarget;
+      if (!video.videoWidth || !video.videoHeight) return;
+      setMobileAspect(video.videoWidth / video.videoHeight);
+      setMobileVideoFailed(false);
     },
     []
   );
@@ -62,41 +77,103 @@ export function HeroSection() {
     []
   );
 
-  const ar = aspectRatio ?? FALLBACK_ASPECT;
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const syncPlayback = () => {
+      const desktop = document.querySelector<HTMLVideoElement>(
+        "[data-hero-video='desktop']"
+      );
+      const mobile = document.querySelector<HTMLVideoElement>(
+        "[data-hero-video='mobile']"
+      );
+      if (mq.matches) {
+        desktop?.pause();
+        void mobile?.play().catch(() => {});
+      } else {
+        mobile?.pause();
+        void desktop?.play().catch(() => {});
+      }
+    };
+    syncPlayback();
+    mq.addEventListener("change", syncPlayback);
+    return () => mq.removeEventListener("change", syncPlayback);
+  }, []);
+
+  const desktopAr = desktopAspect ?? DESKTOP_FALLBACK_ASPECT;
+  const mobileAr = mobileAspect ?? MOBILE_FALLBACK_ASPECT;
+
+  const fallbackBg = {
+    backgroundImage: "url(/consultorio-cadeira.jpeg)",
+    backgroundSize: "cover" as const,
+    backgroundPosition: "center" as const,
+  };
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--color-bg-page)]">
+      {/* Mobile — vídeo portrait */}
       <div
-        className="relative w-full overflow-hidden"
-        style={{ aspectRatio: ar }}
+        className="relative w-full overflow-hidden sm:hidden"
+        style={{ aspectRatio: mobileAr }}
       >
-        {!videoFailed ? (
+        {!mobileVideoFailed ? (
           <video
-            ref={setVideoRef}
-            src={HERO_VIDEO}
+            ref={setMobileVideoRef}
+            data-hero-video="mobile"
+            src={HERO_VIDEO_MOBILE}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
-            onLoadedMetadata={onMetadataLoaded}
+            onLoadedMetadata={onMobileMetadataLoaded}
             onTimeUpdate={onTimeUpdate}
-            onError={() => setVideoFailed(true)}
+            onError={() => setMobileVideoFailed(true)}
+            className="block h-full w-full object-cover object-center"
+            aria-hidden
+          />
+        ) : (
+          <div
+            className="block h-full w-full bg-section-alt"
+            style={fallbackBg}
+            aria-hidden
+          />
+        )}
+
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[18%] min-h-[3rem] bg-gradient-to-b from-[var(--color-bg-page)] from-20% via-[var(--color-bg-page)]/50 to-transparent"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[12%] min-h-[2rem] bg-gradient-to-t from-[var(--color-bg-page)] from-30% to-transparent"
+          aria-hidden
+        />
+      </div>
+
+      {/* Desktop — vídeo landscape */}
+      <div
+        className="relative hidden w-full overflow-hidden sm:block"
+        style={{ aspectRatio: desktopAr }}
+      >
+        {!desktopVideoFailed ? (
+          <video
+            ref={setDesktopVideoRef}
+            data-hero-video="desktop"
+            src={HERO_VIDEO_DESKTOP}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            onLoadedMetadata={onDesktopMetadataLoaded}
+            onTimeUpdate={onTimeUpdate}
+            onError={() => setDesktopVideoFailed(true)}
             className="block h-full w-full origin-center scale-[1.07] object-cover"
             aria-hidden
           />
         ) : (
           <div
             className="block h-full w-full bg-section-alt"
-            style={
-              videoFailed
-                ? {
-                    backgroundImage: "url(/consultorio-cadeira.jpeg)",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }
-                : undefined
-            }
+            style={fallbackBg}
             aria-hidden
           />
         )}
@@ -111,43 +188,78 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[4.5rem] z-10 flex items-center justify-center overflow-visible px-6 sm:inset-0 sm:top-0 sm:px-4 sm:pt-24">
-        <motion.div
-          initial={false}
-          animate={{
-            opacity: logoOpacity,
-            scale: 0.92 + logoOpacity * 0.08,
-          }}
-          transition={{
-            duration: 0.35,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className={`flex flex-col items-center gap-3 sm:gap-4 ${
-            logoOpacity < 0.05 ? "pointer-events-none" : "pointer-events-auto"
-          }`}
-          aria-hidden={logoOpacity < 0.05}
-        >
-          <div className="flex max-h-[min(38%,5.25rem)] w-auto max-w-[min(58vw,10.5rem)] items-center justify-center sm:max-h-none sm:max-w-none sm:w-64 md:w-80 lg:w-96">
-            <Image
-              src="/LogoDallAgnol.png"
-              alt="Dall Agnoll Odontologia"
-              width={400}
-              height={300}
-              className="h-auto max-h-full w-full object-contain object-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] sm:max-h-none"
-              priority
-            />
-          </div>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick("home")}
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-xs font-medium uppercase tracking-wide text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:bg-primary-hover hover:shadow-brand-md sm:px-6 sm:py-3 sm:text-sm"
-          >
-            Falar com o Dr. Claudio
-          </a>
-        </motion.div>
+      {/* Overlay mobile — logo e botão adaptados ao portrait */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[4.5rem] z-10 flex items-center justify-center overflow-visible px-5 sm:hidden">
+        <HeroOverlay logoOpacity={logoOpacity} variant="mobile" />
+      </div>
+
+      {/* Overlay desktop */}
+      <div className="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center overflow-visible px-4 pt-24 sm:flex">
+        <HeroOverlay logoOpacity={logoOpacity} variant="desktop" />
       </div>
     </section>
+  );
+}
+
+type HeroOverlayProps = {
+  logoOpacity: number;
+  variant: "mobile" | "desktop";
+};
+
+function HeroOverlay({ logoOpacity, variant }: HeroOverlayProps) {
+  const isMobile = variant === "mobile";
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{
+        opacity: logoOpacity,
+        scale: 0.92 + logoOpacity * 0.08,
+      }}
+      transition={{
+        duration: 0.35,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className={`flex flex-col items-center ${
+        isMobile ? "gap-4" : "gap-3 sm:gap-4"
+      } ${
+        logoOpacity < 0.05 ? "pointer-events-none" : "pointer-events-auto"
+      }`}
+      aria-hidden={logoOpacity < 0.05}
+    >
+      <div
+        className={
+          isMobile
+            ? "flex w-auto max-w-[min(72vw,11.5rem)] items-center justify-center"
+            : "flex w-64 max-w-none items-center justify-center md:w-80 lg:w-96"
+        }
+      >
+        <Image
+          src="/LogoDallAgnol.png"
+          alt="Dall Agnoll Odontologia"
+          width={400}
+          height={300}
+          className={
+            isMobile
+              ? "h-auto w-full object-contain object-center drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
+              : "h-auto w-full object-contain object-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+          }
+          priority
+        />
+      </div>
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackWhatsAppClick("home")}
+        className={
+          isMobile
+            ? "inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium uppercase tracking-wide text-white shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-200 hover:bg-primary-hover hover:shadow-brand-md"
+            : "inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium uppercase tracking-wide text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:bg-primary-hover hover:shadow-brand-md"
+        }
+      >
+        Falar com o Dr. Claudio
+      </a>
+    </motion.div>
   );
 }
