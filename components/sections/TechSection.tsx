@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useAutoplayVideo } from "@/lib/useAutoplayVideo";
@@ -22,7 +21,7 @@ const techItems: TechItem[] = [
     title: "Escaneamento Intraoral",
     description:
       "Captura digital precisa dos dentes, sem moldagens desconfortáveis, para planejamento personalizado de cada tratamento.",
-    video: "/Intra-oral.mp4",
+    video: "/Intra-oral.MOV",
     imageAlt: "Dr. Claudio Dall'Agnol realizando escaneamento intraoral na clínica",
     empty: false,
   },
@@ -51,12 +50,11 @@ const techItems: TechItem[] = [
 ];
 
 function TechCardVideo({ src, label }: { src: string; label: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  useAutoplayVideo(ref);
+  const setVideoRef = useAutoplayVideo();
 
   return (
     <video
-      ref={ref}
+      ref={setVideoRef}
       src={src}
       autoPlay
       muted
