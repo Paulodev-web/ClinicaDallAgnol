@@ -22,6 +22,13 @@ export function ConceptSection() {
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-ink/35 to-transparent lg:hidden"
+              aria-hidden
+            />
+            <p className="absolute inset-x-0 top-0 z-10 px-4 pt-5 text-center font-heading text-sm tracking-[var(--tracking-caps)] uppercase text-white drop-shadow-[0_1px_8px_rgba(26,42,56,0.45)] sm:pt-6 sm:text-base lg:hidden">
+              conceito dallanol
+            </p>
           </motion.div>
 
           <motion.div

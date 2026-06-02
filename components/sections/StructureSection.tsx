@@ -5,19 +5,19 @@ import Image from "next/image";
 
 const gallery = [
   {
-    image: "/modelos-protese-implante-2.jpeg",
-    title: "Reabilitação sobre implantes",
-    caption: "Planejamento protético fundamentado em estudo e técnica.",
+    image: "/Consultorio1.jpeg",
+    title: "Conforto em cada detalhe",
+    caption: "Ambiente acolhedor, equipamentos de ponta e conforto para cada atendimento.",
   },
   {
-    image: "/instrumentos-periodontia-1.jpeg",
-    title: "Protocolos rigorosos",
-    caption: "Instrumental organizado e esterilizado para cada procedimento.",
+    image: "/Consultorio2.jpeg",
+    title: "Design contemporâneo",
+    caption: "Iluminação pensada para precisão, tranquilidade e um ambiente premium.",
   },
   {
-    image: "/mesa-ortodontia-1.jpeg",
-    title: "Cada detalhe no lugar",
-    caption: "Preparo minucioso que sustenta resultados previsíveis.",
+    image: "/Consultorio3.jpeg",
+    title: "Tecnologia e cuidado",
+    caption: "Espaço limpo, organizado e humanizado para resultados previsíveis.",
   },
 ];
 
