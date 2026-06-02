@@ -3,6 +3,13 @@
 import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { trackWhatsAppClick } from "@/lib/track";
+
+const WHATSAPP_MESSAGE = encodeURIComponent(
+  "Olá! Gostaria de falar com o Dr. Claudio na Clínica Dall'Agnol."
+);
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
 const FALLBACK_ASPECT = 16 / 9;
 /** Segundos iniciais: logo visível com fade out. */
@@ -89,17 +96,30 @@ export function HeroSection() {
             duration: 0.35,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="flex max-h-[min(38%,5.25rem)] w-auto max-w-[min(58vw,10.5rem)] items-center justify-center sm:max-h-none sm:max-w-none sm:w-64 md:w-80 lg:w-96"
+          className={`flex flex-col items-center gap-3 sm:gap-4 ${
+            logoOpacity < 0.05 ? "pointer-events-none" : "pointer-events-auto"
+          }`}
           aria-hidden={logoOpacity < 0.05}
         >
-          <Image
-            src="/LogoDallAgnol.png"
-            alt="Dall Agnoll Odontologia"
-            width={400}
-            height={300}
-            className="h-auto max-h-full w-full object-contain object-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] sm:max-h-none"
-            priority
-          />
+          <div className="flex max-h-[min(38%,5.25rem)] w-auto max-w-[min(58vw,10.5rem)] items-center justify-center sm:max-h-none sm:max-w-none sm:w-64 md:w-80 lg:w-96">
+            <Image
+              src="/LogoDallAgnol.png"
+              alt="Dall Agnoll Odontologia"
+              width={400}
+              height={300}
+              className="h-auto max-h-full w-full object-contain object-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] sm:max-h-none"
+              priority
+            />
+          </div>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("home")}
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-xs font-medium uppercase tracking-wide text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:bg-primary-hover hover:shadow-brand-md sm:px-6 sm:py-3 sm:text-sm"
+          >
+            Falar com o Dr. Claudio
+          </a>
         </motion.div>
       </div>
     </section>

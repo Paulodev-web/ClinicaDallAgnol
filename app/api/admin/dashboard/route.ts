@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { requireAuth, mergeAuthCookies } from "@/lib/supabase/route-handler";
+import {
+  parsePeriodDays,
+  getPeriodBounds,
+  aggregatePeriodMetrics,
+  buildWhatsappOriginBreakdown,
+  buildTrends,
+  extractKnownSessions,
+  type PageVisitRow,
+} from "@/lib/admin/analytics";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -11,6 +20,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = createServerClient();
+    const days = parsePeriodDays(request.nextUrl.searchParams.get("days"));
+    const { periodStart, periodEnd, previousStart, previousEnd } =
+      getPeriodBounds(days);
+
     const now = new Date();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const year = String(now.getFullYear());
@@ -18,21 +31,40 @@ export async function GET(request: NextRequest) {
     const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     const end = `${year}-${month}-${String(lastDay.getDate()).padStart(2, "0")}`;
 
+    const periodStartIso = periodStart.toISOString();
+    const previousStartIso = previousStart.toISOString();
+
     const [
-      { count: visitsCount },
-      { count: leadsCount },
-      { count: whatsappCount },
-      { data: originData },
+      { data: allVisitsRaw },
+      { data: visitsBeforePeriod },
+      { data: leadsRows },
+      { data: whatsappRows },
       { data: recentLeads },
       { data: recentClicks },
       { data: transactions },
     ] = await Promise.all([
-      supabase.from("page_visits").select("*", { count: "exact", head: true }),
-      supabase.from("leads").select("*", { count: "exact", head: true }),
-      supabase.from("whatsapp_clicks").select("*", { count: "exact", head: true }),
-      supabase.from("whatsapp_clicks").select("page_origin"),
+      supabase
+        .from("page_visits")
+        .select("session_id, created_at, path")
+        .gte("created_at", previousStartIso),
+      supabase
+        .from("page_visits")
+        .select("session_id, created_at")
+        .lt("created_at", periodStartIso),
+      supabase
+        .from("leads")
+        .select("created_at")
+        .gte("created_at", previousStartIso),
+      supabase
+        .from("whatsapp_clicks")
+        .select("created_at, page_origin")
+        .gte("created_at", previousStartIso),
       supabase.from("leads").select("*").order("created_at", { ascending: false }).limit(5),
-      supabase.from("whatsapp_clicks").select("*").order("created_at", { ascending: false }).limit(5),
+      supabase
+        .from("whatsapp_clicks")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(5),
       supabase
         .from("financial_transactions")
         .select("*")
@@ -41,20 +73,50 @@ export async function GET(request: NextRequest) {
         .neq("status", "cancelado"),
     ]);
 
-    const visits = visitsCount ?? 0;
-    const leads = leadsCount ?? 0;
-    const whatsappClicks = whatsappCount ?? 0;
-    const conversions = leads + whatsappClicks;
-    const conversionRate = visits > 0 ? Math.round((conversions / visits) * 100) : 0;
+    const allVisits = (allVisitsRaw ?? []) as PageVisitRow[];
+    const beforeRows = visitsBeforePeriod ?? [];
+    const knownSessions = extractKnownSessions(
+      beforeRows.map((r) => ({
+        session_id: r.session_id,
+        created_at: r.created_at,
+        path: "",
+      }))
+    );
+    const leads = leadsRows ?? [];
+    const whatsapp = whatsappRows ?? [];
 
-    const originMap: Record<string, number> = {};
-    (originData || []).forEach((row: { page_origin: string }) => {
-      const k = row.page_origin || "outros";
-      originMap[k] = (originMap[k] || 0) + 1;
-    });
-    const originBreakdown = Object.entries(originMap)
-      .map(([origin, count]) => ({ origin, count }))
-      .sort((a, b) => b.count - a.count);
+    const current = aggregatePeriodMetrics(
+      allVisits,
+      leads,
+      whatsapp,
+      knownSessions,
+      periodStart,
+      periodEnd
+    );
+
+    const previousKnown = new Set<string>();
+    const prevCutoff = previousStart.getTime();
+    for (const row of beforeRows) {
+      if (row.session_id && new Date(row.created_at).getTime() < prevCutoff) {
+        previousKnown.add(row.session_id);
+      }
+    }
+
+    const previous = aggregatePeriodMetrics(
+      allVisits,
+      leads,
+      whatsapp,
+      previousKnown,
+      previousStart,
+      previousEnd
+    );
+
+    const trends = buildTrends(current, previous);
+    const whatsappOriginBreakdown = buildWhatsappOriginBreakdown(
+      whatsapp as { created_at: string; page_origin: string }[],
+      periodStart,
+      periodEnd
+    );
 
     const receitas = (transactions || []).filter((t) => t.type === "receita");
     const despesas = (transactions || []).filter((t) => t.type === "despesa");
@@ -64,11 +126,10 @@ export async function GET(request: NextRequest) {
 
     const data = {
       analytics: {
-        visits,
-        leads,
-        whatsappClicks,
-        conversionRate,
-        originBreakdown,
+        periodDays: days,
+        ...current,
+        whatsappOriginBreakdown,
+        trends,
       },
       recentLeads: recentLeads ?? [],
       recentClicks: recentClicks ?? [],
