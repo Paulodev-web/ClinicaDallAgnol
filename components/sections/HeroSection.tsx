@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import { trackWhatsAppClick } from "@/lib/track";
+import { useAutoplayVideo } from "@/lib/useAutoplayVideo";
 
 const WHATSAPP_MESSAGE = encodeURIComponent(
   "Olá! Gostaria de falar com o Dr. Claudio na Clínica Dall'Agnol."
@@ -34,10 +35,25 @@ function logoOpacityAtTime(currentTime: number, duration: number): number {
   return opacity;
 }
 
+const HERO_VIDEO_DESKTOP = "/VideoAbertura.mp4";
+const HERO_VIDEO_MOBILE = "/VideoAbertura-mobile.mp4";
+
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
   const [logoOpacity, setLogoOpacity] = useState(1);
+  const [videoSrc, setVideoSrc] = useState(HERO_VIDEO_DESKTOP);
+
+  useAutoplayVideo(videoRef);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const pickSrc = () =>
+      setVideoSrc(mq.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+    pickSrc();
+    mq.addEventListener("change", pickSrc);
+    return () => mq.removeEventListener("change", pickSrc);
+  }, []);
 
   const onMetadataLoaded = useCallback(() => {
     const video = videoRef.current;
@@ -60,8 +76,8 @@ export function HeroSection() {
         style={{ aspectRatio: ar }}
       >
         <video
+          key={videoSrc}
           ref={videoRef}
-          src="/VideoAbertura.MOV"
           autoPlay
           muted
           loop
@@ -71,7 +87,9 @@ export function HeroSection() {
           onTimeUpdate={onTimeUpdate}
           className="block h-full w-full origin-center scale-[1.07] object-cover"
           aria-hidden
-        />
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
 
         {/* Degradê esbranquiçado nas laterais — integra com o fundo da página */}
         <div

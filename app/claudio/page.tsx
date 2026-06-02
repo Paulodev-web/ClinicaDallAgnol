@@ -291,7 +291,7 @@ export default function ClaudioPage() {
               className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-graysoft/60 shadow-brand-md"
             >
               <video
-                src="/Intra-oral.MOV"
+                src="/Intra-oral.mp4"
                 autoPlay
                 muted
                 loop

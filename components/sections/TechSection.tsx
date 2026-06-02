@@ -1,7 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useAutoplayVideo } from "@/lib/useAutoplayVideo";
 
 type TechItem =
   | {
@@ -20,7 +22,7 @@ const techItems: TechItem[] = [
     title: "Escaneamento Intraoral",
     description:
       "Captura digital precisa dos dentes, sem moldagens desconfortáveis, para planejamento personalizado de cada tratamento.",
-    video: "/Intra-oral.MOV",
+    video: "/Intra-oral.mp4",
     imageAlt: "Dr. Claudio Dall'Agnol realizando escaneamento intraoral na clínica",
     empty: false,
   },
@@ -47,6 +49,25 @@ const techItems: TechItem[] = [
     empty: false,
   },
 ];
+
+function TechCardVideo({ src, label }: { src: string; label: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useAutoplayVideo(ref);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      aria-label={label}
+    />
+  );
+}
 
 export function TechSection() {
   return (
@@ -88,15 +109,7 @@ export function TechSection() {
                   <>
                     <div className="relative aspect-[4/3] overflow-hidden">
                       {item.video ? (
-                        <video
-                          src={item.video}
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          aria-label={item.imageAlt}
-                        />
+                        <TechCardVideo src={item.video} label={item.imageAlt} />
                       ) : item.image ? (
                         <Image
                           src={item.image}
