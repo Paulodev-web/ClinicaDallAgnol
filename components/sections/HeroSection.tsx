@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import { trackWhatsAppClick } from "@/lib/track";
@@ -16,34 +16,11 @@ const MOBILE_FALLBACK_ASPECT = 464 / 832;
 const HERO_VIDEO_DESKTOP = "/VideoAbertura.MOV";
 const HERO_VIDEO_MOBILE = "/VideoAberturamobile.mp4";
 
-/** Segundos iniciais: logo visível com fade out. */
-const LOGO_AT_START_SECONDS = 2.5;
-/** Segundos finais do vídeo em que a logo aparece (antes do loop). */
-const LOGO_AT_END_SECONDS = 2.5;
-
-function logoOpacityAtTime(currentTime: number, duration: number): number {
-  let opacity = 0;
-
-  if (currentTime < LOGO_AT_START_SECONDS) {
-    const t = currentTime / LOGO_AT_START_SECONDS;
-    opacity = Math.max(0, 1 - t);
-  }
-
-  const remaining = duration - currentTime;
-  if (remaining <= LOGO_AT_END_SECONDS) {
-    const t = 1 - remaining / LOGO_AT_END_SECONDS;
-    opacity = Math.max(opacity, t);
-  }
-
-  return opacity;
-}
-
 export function HeroSection() {
   const setDesktopVideoRef = useAutoplayVideo();
   const setMobileVideoRef = useAutoplayVideo();
   const [desktopAspect, setDesktopAspect] = useState<number | null>(null);
   const [mobileAspect, setMobileAspect] = useState<number | null>(null);
-  const [logoOpacity, setLogoOpacity] = useState(1);
   const [desktopVideoFailed, setDesktopVideoFailed] = useState(false);
   const [mobileVideoFailed, setMobileVideoFailed] = useState(false);
 
@@ -63,37 +40,6 @@ export function HeroSection() {
       if (!video.videoWidth || !video.videoHeight) return;
       setMobileAspect(video.videoWidth / video.videoHeight);
       setMobileVideoFailed(false);
-    },
-    []
-  );
-
-  const logoOpacityRaf = useRef<number | null>(null);
-
-  const onTimeUpdate = useCallback(
-    (e: React.SyntheticEvent<HTMLVideoElement>) => {
-      const video = e.currentTarget;
-      const isMobileVideo = video.dataset.heroVideo === "mobile";
-      const isMobileViewport = window.matchMedia("(max-width: 639px)").matches;
-      if (isMobileVideo !== isMobileViewport) return;
-
-      if (logoOpacityRaf.current !== null) return;
-      logoOpacityRaf.current = requestAnimationFrame(() => {
-        logoOpacityRaf.current = null;
-        if (!Number.isFinite(video.duration)) return;
-        const next = logoOpacityAtTime(video.currentTime, video.duration);
-        setLogoOpacity((prev) =>
-          Math.abs(prev - next) < 0.008 ? prev : next
-        );
-      });
-    },
-    []
-  );
-
-  useEffect(
-    () => () => {
-      if (logoOpacityRaf.current !== null) {
-        cancelAnimationFrame(logoOpacityRaf.current);
-      }
     },
     []
   );
@@ -151,7 +97,6 @@ export function HeroSection() {
             playsInline
             preload="auto"
             onLoadedMetadata={onMobileMetadataLoaded}
-            onTimeUpdate={onTimeUpdate}
             onError={() => setMobileVideoFailed(true)}
             className="block h-full w-full origin-center scale-[1.12] object-cover object-[center_42%]"
             aria-hidden
@@ -190,7 +135,6 @@ export function HeroSection() {
             playsInline
             preload="auto"
             onLoadedMetadata={onDesktopMetadataLoaded}
-            onTimeUpdate={onTimeUpdate}
             onError={() => setDesktopVideoFailed(true)}
             className="block h-full w-full origin-center scale-[1.07] object-cover"
             aria-hidden
@@ -215,38 +159,29 @@ export function HeroSection() {
 
       {/* Overlay mobile — logo e botão adaptados ao portrait */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[4.5rem] z-10 flex items-center justify-center overflow-visible px-5 sm:hidden">
-        <HeroOverlay logoOpacity={logoOpacity} variant="mobile" />
+        <HeroOverlay variant="mobile" />
       </div>
 
       {/* Overlay desktop */}
       <div className="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center overflow-visible px-4 pt-24 sm:flex">
-        <HeroOverlay logoOpacity={logoOpacity} variant="desktop" />
+        <HeroOverlay variant="desktop" />
       </div>
     </section>
   );
 }
 
 type HeroOverlayProps = {
-  logoOpacity: number;
   variant: "mobile" | "desktop";
 };
 
-function HeroOverlay({ logoOpacity, variant }: HeroOverlayProps) {
+function HeroOverlay({ variant }: HeroOverlayProps) {
   const isMobile = variant === "mobile";
-  const scale = 0.92 + logoOpacity * 0.08;
 
   return (
     <div
-      style={{
-        opacity: logoOpacity,
-        transform: `scale(${scale})`,
-      }}
-      className={`flex flex-col items-center will-change-[opacity,transform] ${
+      className={`pointer-events-auto flex flex-col items-center ${
         isMobile ? "gap-4" : "gap-3 sm:gap-4"
-      } ${
-        logoOpacity < 0.05 ? "pointer-events-none" : "pointer-events-auto"
       }`}
-      aria-hidden={logoOpacity < 0.05}
     >
       <div
         className={
