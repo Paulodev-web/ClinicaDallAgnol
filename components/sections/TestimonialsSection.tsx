@@ -4,7 +4,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Star } from "lucide-react";
 
-const testimonials = [
+type Testimonial = {
+  quote: string;
+  author: string;
+  role: string;
+  stars: number;
+  image?: string;
+  /** false = oculto no site, mantido no código para reativar depois */
+  enabled?: boolean;
+};
+
+const testimonials: Testimonial[] = [
   {
     quote:
       "Desde o início senti segurança e transparência em um caso que não era fácil. Sinto não só um sorriso perfeito, muito além das minhas expectativas, mas a volta da autoestima e a vontade de sorrir sem vergonha. Recomendo de olhos fechados — fui acolhida do início ao fim por toda a equipe e pelo Dr. Cláudio.",
@@ -13,6 +23,7 @@ const testimonials = [
     stars: 5,
   },
   {
+    enabled: false,
     quote:
       "Tratamento de canal sem dor. A tecnologia e o cuidado fazem toda a diferença.",
     author: "Roberto L.",
@@ -21,6 +32,7 @@ const testimonials = [
     stars: 5,
   },
   {
+    enabled: false,
     quote:
       "Finalmente encontrei um lugar que entende o que é excelência em odontologia.",
     author: "Ana Paula M.",
@@ -29,6 +41,7 @@ const testimonials = [
     stars: 5,
   },
   {
+    enabled: false,
     quote:
       "Atendimento impecável do início ao fim. Recomendo de olhos fechados.",
     author: "Carlos R.",
@@ -38,11 +51,13 @@ const testimonials = [
   },
 ];
 
+const activeTestimonials = testimonials.filter((t) => t.enabled !== false);
+
 function TestimonialCard({
   testimonial,
   index,
 }: {
-  testimonial: (typeof testimonials)[0];
+  testimonial: Testimonial;
   index: number;
 }) {
   return (
@@ -156,7 +171,7 @@ export function TestimonialsSection() {
         {/* Carrossel no mobile */}
         <div className="md:hidden -mx-4 px-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide">
           <div className="flex gap-4 pb-2">
-            {testimonials.map((testimonial, i) => (
+            {activeTestimonials.map((testimonial, i) => (
               <TestimonialCard key={testimonial.author} testimonial={testimonial} index={i} />
             ))}
           </div>
@@ -164,7 +179,7 @@ export function TestimonialsSection() {
 
         {/* Grid no desktop */}
         <div className="hidden md:grid md:grid-cols-2 gap-6">
-          {testimonials.map((testimonial, i) => (
+          {activeTestimonials.map((testimonial, i) => (
             <TestimonialCard key={testimonial.author} testimonial={testimonial} index={i} />
           ))}
         </div>

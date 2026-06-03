@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { DR_CLAUDIO_PROFILE_PAGE_ENABLED } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Dr. Claudio Dall'Agnol | Dall Agnol Odontologia",
@@ -11,5 +13,9 @@ export default function ClaudioLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (!DR_CLAUDIO_PROFILE_PAGE_ENABLED) {
+    redirect("/");
+  }
+
   return children;
 }

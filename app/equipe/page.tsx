@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
+import { DR_CLAUDIO_PROFILE_PAGE_ENABLED } from "@/lib/constants";
 
 const teamMembers = [
   {
@@ -15,7 +16,7 @@ const teamMembers = [
     description:
       "É cirurgião-dentista graduado em Odontologia pela Universidade Luterana do Brasil. Pós-graduado em Cirurgia Oral, Implantodontia, Periodontia, Ortodontia e Reabilitação Oral Estética. Possui Mestrado em Odontologia na área de Clínica Odontológica. Tem como objetivo em seu trabalho devolver saúde, autoestima e qualidade de vida aos pacientes, preservando a naturalidade do sorriso e aliando performance clínica de alto padrão ao planejamento individualizado, à tecnologia digital e aos protocolos rigorosos que garantem segurança e resultados previsíveis em cada caso.",
     image: "/DrClaudio.png",
-    profileHref: "/claudio",
+    ...(DR_CLAUDIO_PROFILE_PAGE_ENABLED ? { profileHref: "/claudio" as const } : {}),
   },
   {
     name: "Dr. Gabriel Dall Agnol Oliveira",

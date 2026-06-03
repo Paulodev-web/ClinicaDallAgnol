@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import { trackWhatsAppClick } from "@/lib/track";
@@ -68,11 +67,33 @@ export function HeroSection() {
     []
   );
 
+  const logoOpacityRaf = useRef<number | null>(null);
+
   const onTimeUpdate = useCallback(
     (e: React.SyntheticEvent<HTMLVideoElement>) => {
       const video = e.currentTarget;
-      if (!Number.isFinite(video.duration)) return;
-      setLogoOpacity(logoOpacityAtTime(video.currentTime, video.duration));
+      const isMobileVideo = video.dataset.heroVideo === "mobile";
+      const isMobileViewport = window.matchMedia("(max-width: 639px)").matches;
+      if (isMobileVideo !== isMobileViewport) return;
+
+      if (logoOpacityRaf.current !== null) return;
+      logoOpacityRaf.current = requestAnimationFrame(() => {
+        logoOpacityRaf.current = null;
+        if (!Number.isFinite(video.duration)) return;
+        const next = logoOpacityAtTime(video.currentTime, video.duration);
+        setLogoOpacity((prev) =>
+          Math.abs(prev - next) < 0.008 ? prev : next
+        );
+      });
+    },
+    []
+  );
+
+  useEffect(
+    () => () => {
+      if (logoOpacityRaf.current !== null) {
+        cancelAnimationFrame(logoOpacityRaf.current);
+      }
     },
     []
   );
@@ -107,6 +128,10 @@ export function HeroSection() {
     backgroundSize: "cover" as const,
     backgroundPosition: "center" as const,
   };
+  const mobileFallbackBg = {
+    ...fallbackBg,
+    backgroundPosition: "center 42%" as const,
+  };
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--color-bg-page)]">
@@ -128,19 +153,19 @@ export function HeroSection() {
             onLoadedMetadata={onMobileMetadataLoaded}
             onTimeUpdate={onTimeUpdate}
             onError={() => setMobileVideoFailed(true)}
-            className="block h-full w-full object-cover object-center"
+            className="block h-full w-full origin-center scale-[1.12] object-cover object-[center_42%]"
             aria-hidden
           />
         ) : (
           <div
-            className="block h-full w-full bg-section-alt"
-            style={fallbackBg}
+            className="block h-full w-full origin-center scale-[1.12] bg-section-alt"
+            style={mobileFallbackBg}
             aria-hidden
           />
         )}
 
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[18%] min-h-[3rem] bg-gradient-to-b from-[var(--color-bg-page)] from-20% via-[var(--color-bg-page)]/50 to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[14%] min-h-[2.5rem] bg-gradient-to-b from-[var(--color-bg-page)] from-35% to-transparent"
           aria-hidden
         />
         <div
@@ -208,19 +233,15 @@ type HeroOverlayProps = {
 
 function HeroOverlay({ logoOpacity, variant }: HeroOverlayProps) {
   const isMobile = variant === "mobile";
+  const scale = 0.92 + logoOpacity * 0.08;
 
   return (
-    <motion.div
-      initial={false}
-      animate={{
+    <div
+      style={{
         opacity: logoOpacity,
-        scale: 0.92 + logoOpacity * 0.08,
+        transform: `scale(${scale})`,
       }}
-      transition={{
-        duration: 0.35,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className={`flex flex-col items-center ${
+      className={`flex flex-col items-center will-change-[opacity,transform] ${
         isMobile ? "gap-4" : "gap-3 sm:gap-4"
       } ${
         logoOpacity < 0.05 ? "pointer-events-none" : "pointer-events-auto"
@@ -260,6 +281,6 @@ function HeroOverlay({ logoOpacity, variant }: HeroOverlayProps) {
       >
         Falar com o Dr. Claudio
       </a>
-    </motion.div>
+    </div>
   );
 }
