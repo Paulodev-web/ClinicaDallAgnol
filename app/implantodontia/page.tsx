@@ -133,7 +133,7 @@ const maintenanceItems = [
   },
   {
     icon: HeartPulse,
-    title: "Saúde peri-implantar",
+    title: "Saúde Perimplantar",
     description:
       "Monitoramento da gengiva ao redor dos implantes para prevenir e tratar precocemente inflamações que possam comprometer a estabilidade do tratamento.",
   },
@@ -433,7 +433,7 @@ export default function ImplantodontiaPage() {
                 <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={1.5} />
                 <span>
                   Escovar os dentes e a prótese pelo menos três vezes ao dia, com
-                  escova de cerdas macias.
+                  as escovas indicadas pelo Implantodontista.
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -441,6 +441,12 @@ export default function ImplantodontiaPage() {
                 <span>
                   Usar fio dental, fita ou escovas interdentais nas regiões ao
                   redor dos implantes.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={1.5} />
+                <span>
+                  Utilizar irrigadores orais conforme orientação da equipe.
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -458,6 +464,11 @@ export default function ImplantodontiaPage() {
                 </span>
               </li>
             </ul>
+            <p className="mt-6 text-ink-secondary text-sm leading-relaxed border-t border-graysoft/60 pt-6">
+              Os cuidados são necessários para que não apareçam doenças
+              perimplantares como a mucosite e a perimplantite, que podem
+              acarretar na perda de implantes.
+            </p>
           </motion.div>
         </div>
       </section>

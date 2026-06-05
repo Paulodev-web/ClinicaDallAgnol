@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { HttpsSecurityBadge } from "@/components/ui/HttpsSecurityBadge";
 
 const footerLinks = {
   navegacao: [
@@ -64,10 +65,11 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-graysoft/60 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-ink-muted text-sm">
+          <p className="text-ink-muted text-sm text-center sm:text-left">
             © {new Date().getFullYear()} Dall Agnol Odontologia. Todos os direitos
             reservados.
           </p>
+          <HttpsSecurityBadge />
         </div>
       </div>
     </footer>

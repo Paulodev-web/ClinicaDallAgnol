@@ -9,7 +9,7 @@ export function ConceptSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <h2 className="order-1 lg:order-2 lg:col-start-2 lg:row-start-1 text-3xl sm:text-4xl font-light text-ink text-center lg:text-left mb-2 lg:mb-6">
-            O Conceito Dall&apos;Agnol
+            Dall&apos;Agnol Odontologia
           </h2>
 
           <motion.div
@@ -35,17 +35,16 @@ export function ConceptSection() {
             className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2"
           >
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Ao longo dos anos, evoluímos para um ecossistema multidisciplinar
-              onde a excelência não é exceção — é o padrão. Um corpo clínico de
-              especialistas complementares, cada um dedicado à sua área de
-              expertise.
+              Com 21 anos de experiência na odontologia, realizei meu sonho em
+              2016 ao inaugurar a Dall&apos;Agnol Odontologia. Desde 2005, com
+              muito esforço e dedicação, construí uma clínica que reflete meu
+              compromisso com a excelência.
             </p>
             <p className="text-ink-secondary text-lg leading-relaxed">
-              O que nos une é uma filosofia de cuidado institucional: planejamento
-              compartilhado, protocolos rigorosos e interconsulta entre
-              profissionais. Cada tratamento é conduzido por quem domina aquela
-              especialidade — com a confiança de uma equipe que pensa o caso em
-              conjunto.
+              Pós-graduações, constante atualização e um atendimento humanizado
+              fazem parte da nossa essência. Na Dall&apos;Agnol, cada sorriso é
+              motivo de dedicação e cuidado, fruto de anos de trabalho e paixão
+              pela odontologia.
             </p>
           </motion.div>
         </div>
