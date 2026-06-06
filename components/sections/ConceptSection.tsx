@@ -35,20 +35,22 @@ export function ConceptSection() {
             className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2"
           >
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Com 21 anos de experiência na odontologia, realizei meu sonho em
-              2016 ao inaugurar a Dall&apos;Agnol Odontologia. Desde 2005, quando
-              me formei, me esforcei e me dediquei para ter uma clínica que
-              refletisse meu compromisso com a excelência.
+              Com 21 anos de experiência clínica, o Cirurgião-dentista Cláudio
+              Dall&apos;Agnol é referência em Odontologia em Fontoura Xavier e
+              tem se mostrado um dos profissionais melhor avaliados na região.
             </p>
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Hoje, com mais de 30 pós-graduações na odontologia, realizo os
-              atendimentos com alta performance clínica e um atendimento
-              humanizado que fazem parte da nossa essência. Na clínica, cada
-              sorriso é motivo de dedicação e cuidado, fruto de anos de trabalho
-              e paixão pela Odontologia.
+              Em 2016 criou a Dall&apos;Agnol Odontologia, sonho este que o
+              impulsionou desde a formação em 2005 pela Universidade Luterana
+              Do Brasil. Com muito estudo, dedicação e pós-graduações em diversas
+              áreas da Odontologia, o sonho de ter uma clínica que refletisse o
+              compromisso com a excelência, se tornou realidade.
             </p>
-            <p className="text-primary text-lg font-medium leading-relaxed">
-              Cuidando de pessoas. Transformando sorrisos.
+            <p className="text-ink-secondary text-lg leading-relaxed">
+              Hoje, realiza os atendimentos aos pacientes com alta performance
+              clínica e atendimento humanizado que fazem parte da sua essência.
+              Na clínica, cada sorriso é motivo de dedicação e cuidado, fruto de
+              anos de trabalho e paixão pela Odontologia.
             </p>
           </motion.div>
         </div>
