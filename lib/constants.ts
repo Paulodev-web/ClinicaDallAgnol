@@ -1,5 +1,5 @@
 /** Página dedicada /claudio e link "Conheça o Dr. Claudio" na equipe */
-export const DR_CLAUDIO_PROFILE_PAGE_ENABLED = false;
+export const DR_CLAUDIO_PROFILE_PAGE_ENABLED = true;
 
 export const WHATSAPP_NUMBER = "555484017938";
 export const MAPS_URL = "https://maps.app.goo.gl/w4VkwirjPYeTmhmY6";
