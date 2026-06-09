@@ -26,12 +26,12 @@ const credentials = [
   {
     icon: Award,
     title: "Pós-graduações",
-    text: "Cirurgia Oral, Implantodontia, Periodontia, Ortodontia e Reabilitação Oral Estética.",
+    text: "Cirurgia Oral, Implantodontia, Periodontia, Ortodontia e Reabilitação Oral Estética — ABORS, Atitus CIODONTO e UFRGS.",
   },
   {
     icon: GraduationCap,
     title: "Mestrado",
-    text: "Mestrado em Odontologia na área de Clínica Odontológica.",
+    text: "Mestrado em Odontologia na área de Clínica Odontológica pela Universidade de Passo Fundo (UPF).",
   },
 ];
 
