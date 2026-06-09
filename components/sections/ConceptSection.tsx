@@ -14,7 +14,7 @@ export function ConceptSection() {
               Dall&apos;Agnol Odontologia
             </h2>
             <p className="mt-2 text-sm font-medium tracking-wide text-primary-mid">
-              Dr. Cláudio Dall&apos;Agnol · CRO {DR_CLAUDIO_CRO}
+              Dr. Cláudio Dall&apos;Agnol · {DR_CLAUDIO_CRO}
             </p>
           </div>
 

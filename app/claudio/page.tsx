@@ -26,7 +26,7 @@ const credentials = [
   {
     icon: Award,
     title: "Pós-graduações",
-    text: "Cirurgia Oral, Implantodontia, Periodontia, Ortodontia e Reabilitação Oral Estética — ABORS, Atitus CIODONTO e UFRGS.",
+    text: "Cirurgia Oral, Implantodontia, Periodontia, Ortodontia e Reabilitação Oral Estética — ULBRA, ABORS, Atitus Ciodonto e UFRGS.",
   },
   {
     icon: GraduationCap,
