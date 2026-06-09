@@ -173,6 +173,16 @@ export default function ClaudioPage() {
                 tratamento é devolver saúde, autoestima e qualidade de vida,
                 preservando a naturalidade do sorriso.
               </p>
+              <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+                Graduado em Odontologia pela Universidade Luterana do Brasil
+                (ULBRA) em 2005, buscou continuamente o aprimoramento
+                profissional por meio de especializações e pós-graduações em
+                diversas áreas da Odontologia, consolidando uma formação ampla e
+                diferenciada. É Mestre em Clínica Odontológica, Especialista em
+                Implantodontia, Periodontia e Ortodontia, além de possuir
+                formação complementar em Endodontia, Dentística e Reabilitação
+                Oral.
+              </p>
               <p className="text-ink-secondary text-lg leading-relaxed mb-8">
                 Como Diretor Clínico, conduz o planejamento de casos complexos e
                 reabilitações orais, aliando performance clínica de alto padrão

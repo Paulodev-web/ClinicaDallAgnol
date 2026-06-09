@@ -41,15 +41,6 @@ export function ConceptSection() {
               pacientes.
             </p>
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Graduado em Odontologia pela Universidade Luterana do Brasil (ULBRA)
-              em 2005, buscou continuamente o aprimoramento profissional por meio
-              de especializações e pós-graduações em diversas áreas da Odontologia,
-              consolidando uma formação ampla e diferenciada. É Mestre em Clínica
-              Odontológica, Especialista em Implantodontia, Periodontia e
-              Ortodontia, além de possuir formação complementar em Endodontia,
-              Dentística e Reabilitação Oral.
-            </p>
-            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
               Em 2015, concretizou o sonho de fundar a Dall&apos;Agnol Odontologia,
               um espaço criado para oferecer atendimento de excelência, aliando
               conhecimento científico, tecnologia e acolhimento humano. Desde
