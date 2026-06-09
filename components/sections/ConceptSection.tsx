@@ -35,7 +35,7 @@ export function ConceptSection() {
             className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2"
           >
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Com mais de 21 anos de dedicação à Odontologia, o cirurgião-dentista
+              Com mais de 21 anos de dedicação à Odontologia, o Cirurgião-Dentista
               Dr. Cláudio Dall&apos;Agnol construiu uma trajetória pautada pela
               excelência clínica, atualização constante e cuidado genuíno com seus
               pacientes.
