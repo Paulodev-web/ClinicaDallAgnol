@@ -8,8 +8,8 @@ export function ConceptSection() {
   return (
     <section className="section-py bg-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="order-1 lg:order-2 lg:col-start-2 lg:row-start-1 mb-2 lg:mb-4 lg:-mt-2 text-center lg:text-left">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-x-12 lg:gap-y-3 items-start">
+          <div className="order-1 lg:order-2 lg:col-start-2 lg:row-start-1 lg:-mt-2 text-center lg:text-left">
             <h2 className="text-3xl sm:text-4xl font-light text-ink">
               Dall&apos;Agnol Odontologia
             </h2>
@@ -38,7 +38,7 @@ export function ConceptSection() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2"
+            className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2 -mt-2 lg:-mt-1"
           >
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
               Com mais de 21 anos de dedicação à Odontologia, o Cirurgião-Dentista
