@@ -35,22 +35,37 @@ export function ConceptSection() {
             className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2"
           >
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Com 21 anos de experiência clínica, o Cirurgião-dentista Cláudio
-              Dall&apos;Agnol é referência em Odontologia em Fontoura Xavier e
-              tem se mostrado um dos profissionais melhor avaliados na região.
+              Com mais de 21 anos de dedicação à Odontologia, o cirurgião-dentista
+              Dr. Cláudio Dall&apos;Agnol construiu uma trajetória pautada pela
+              excelência clínica, atualização constante e cuidado genuíno com seus
+              pacientes.
             </p>
             <p className="text-ink-secondary text-lg leading-relaxed mb-6">
-              Em 2016 criou a Dall&apos;Agnol Odontologia, sonho este que o
-              impulsionou desde a formação em 2005 pela Universidade Luterana
-              Do Brasil. Com muito estudo, dedicação e pós-graduações em diversas
-              áreas da Odontologia, o sonho de ter uma clínica que refletisse o
-              compromisso com a excelência, se tornou realidade.
+              Graduado em Odontologia pela Universidade Luterana do Brasil (ULBRA)
+              em 2005, buscou continuamente o aprimoramento profissional por meio
+              de especializações e pós-graduações em diversas áreas da Odontologia,
+              consolidando uma formação ampla e diferenciada. É Mestre em Clínica
+              Odontológica, Especialista em Implantodontia, Periodontia e
+              Ortodontia, além de possuir formação complementar em Endodontia,
+              Dentística e Reabilitação Oral.
+            </p>
+            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+              Em 2015, concretizou o sonho de fundar a Dall&apos;Agnol Odontologia,
+              um espaço criado para oferecer atendimento de excelência, aliando
+              conhecimento científico, tecnologia e acolhimento humano. Desde
+              então, a clínica tem se destacado pelo compromisso com a qualidade
+              dos tratamentos e pela construção de relações de confiança duradouras
+              com seus pacientes.
+            </p>
+            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+              Acreditamos que cada sorriso possui uma história única. Por isso,
+              cada atendimento é realizado de forma personalizada, respeitando as
+              necessidades, expectativas e objetivos de cada pessoa.
             </p>
             <p className="text-ink-secondary text-lg leading-relaxed">
-              Hoje, realiza os atendimentos aos pacientes com alta performance
-              clínica e atendimento humanizado que fazem parte da sua essência.
-              Na clínica, cada sorriso é motivo de dedicação e cuidado, fruto de
-              anos de trabalho e paixão pela Odontologia.
+              Na Dall&apos;Agnol Odontologia, excelência técnica e cuidado humano
+              caminham juntos para proporcionar saúde, bem-estar e confiança
+              através do sorriso.
             </p>
           </motion.div>
         </div>
