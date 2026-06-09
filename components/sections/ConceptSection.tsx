@@ -2,15 +2,21 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { DR_CLAUDIO_CRO } from "@/lib/constants";
 
 export function ConceptSection() {
   return (
     <section className="section-py bg-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <h2 className="order-1 lg:order-2 lg:col-start-2 lg:row-start-1 text-3xl sm:text-4xl font-light text-ink text-center lg:text-left mb-2 lg:mb-4 lg:-mt-2">
-            Dall&apos;Agnol Odontologia
-          </h2>
+          <div className="order-1 lg:order-2 lg:col-start-2 lg:row-start-1 mb-2 lg:mb-4 lg:-mt-2 text-center lg:text-left">
+            <h2 className="text-3xl sm:text-4xl font-light text-ink">
+              Dall&apos;Agnol Odontologia
+            </h2>
+            <p className="mt-2 text-sm font-medium tracking-wide text-primary-mid">
+              Dr. Cláudio Dall&apos;Agnol · CRO {DR_CLAUDIO_CRO}
+            </p>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, x: -30 }}
