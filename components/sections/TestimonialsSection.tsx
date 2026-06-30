@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
 type Testimonial = {
   quote: string;
@@ -95,7 +95,7 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-surface rounded-xl p-5 border border-graysoft/60 shadow-brand-md h-full flex flex-col relative overflow-hidden flex-shrink-0 w-[85vw] max-w-[340px] md:w-[45vw] md:max-w-[520px] snap-center"
+      className="bg-surface rounded-xl p-6 md:p-8 border border-graysoft/60 shadow-brand-md flex flex-col relative overflow-hidden flex-shrink-0 w-full snap-center"
     >
       {/* Aspas de fundo com opacidade baixa */}
       <div
@@ -158,14 +158,20 @@ export function TestimonialsSection() {
   const scrollTo = useCallback((index: number) => {
     const el = scrollRef.current;
     if (!el) return;
-    const card = el.children[index] as HTMLElement;
-    if (!card) return;
-    el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
+    el.scrollTo({ left: el.clientWidth * index, behavior: "smooth" });
     setCurrent(index);
   }, []);
 
+  const currentRef = useRef(current);
+  currentRef.current = current;
+
   const prev = () => scrollTo((current - 1 + total) % total);
-  const next = () => scrollTo((current + 1) % total);
+  const next = useCallback(() => scrollTo((currentRef.current + 1) % total), [scrollTo, total]);
+
+  useEffect(() => {
+    const timer = setInterval(next, 25000);
+    return () => clearInterval(timer);
+  }, [next]);
 
   return (
     <section className="py-10 md:py-14 bg-section-alt">
@@ -217,7 +223,7 @@ export function TestimonialsSection() {
         <div className="relative">
           <div
             ref={scrollRef}
-            className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide flex gap-4 pb-2"
+            className="overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide flex pb-2"
           >
             {activeTestimonials.map((testimonial, i) => (
               <TestimonialCard key={testimonial.author} testimonial={testimonial} index={i} />
