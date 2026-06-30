@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 type Testimonial = {
   quote: string;
@@ -82,100 +82,40 @@ const testimonials: Testimonial[] = [
 
 const activeTestimonials = testimonials.filter((t) => t.enabled !== false);
 
-function TestimonialCard({
-  testimonial,
-  index,
-}: {
-  testimonial: Testimonial;
-  index: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-surface rounded-xl p-6 md:p-8 border border-graysoft/60 shadow-brand-md flex flex-col relative overflow-hidden flex-shrink-0 w-full snap-center"
-    >
-      {/* Aspas de fundo com opacidade baixa */}
-      <div
-        className="absolute top-4 right-4 text-primary/[0.05] text-6xl font-serif leading-none select-none"
-        aria-hidden
-      >
-        &ldquo;
-      </div>
-
-      <div className="flex gap-1 mb-4">
-        {Array.from({ length: testimonial.stars }).map((_, i) => (
-          <Star
-            key={i}
-            className="w-5 h-5 fill-amber-400 text-amber-400"
-            strokeWidth={1.5}
-          />
-        ))}
-      </div>
-
-      <p className="text-ink-secondary mb-4 text-sm sm:text-base italic leading-relaxed relative z-10">
-        &ldquo;{testimonial.quote}&rdquo;
-      </p>
-
-      <div className="mt-auto flex items-center gap-4">
-        <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-primary/10 flex items-center justify-center">
-          {testimonial.image ? (
-            <Image
-              src={testimonial.image}
-              alt={testimonial.author}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <span className="text-sm font-medium text-primary">
-              {testimonial.author
-                .split(" ")
-                .map((part) => part[0])
-                .join("")
-                .slice(0, 2)
-                .toUpperCase()}
-            </span>
-          )}
-        </div>
-        <div className="min-w-0">
-          <p className="font-medium text-ink">{testimonial.author}</p>
-          <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-            {testimonial.role}
-          </span>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 export function TestimonialsSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
   const total = activeTestimonials.length;
-
-  const scrollTo = useCallback((index: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTo({ left: el.clientWidth * index, behavior: "smooth" });
-    setCurrent(index);
-  }, []);
-
   const currentRef = useRef(current);
   currentRef.current = current;
 
-  const prev = () => scrollTo((current - 1 + total) % total);
-  const next = useCallback(() => scrollTo((currentRef.current + 1) % total), [scrollTo, total]);
+  const goTo = useCallback((index: number, dir: number) => {
+    setDirection(dir);
+    setCurrent(index);
+  }, []);
+
+  const prev = () => goTo((current - 1 + total) % total, -1);
+  const next = useCallback(
+    () => goTo((currentRef.current + 1) % total, 1),
+    [goTo, total]
+  );
 
   useEffect(() => {
     const timer = setInterval(next, 25000);
     return () => clearInterval(timer);
   }, [next]);
 
+  const testimonial = activeTestimonials[current];
+
+  const variants = {
+    enter: (dir: number) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
+  };
+
   return (
     <section className="py-10 md:py-14 bg-section-alt">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -219,48 +159,101 @@ export function TestimonialsSection() {
           </p>
         </motion.div>
 
-        {/* Carrossel — mobile e desktop */}
-        <div className="relative">
-          <div
-            ref={scrollRef}
-            className="overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide flex pb-2"
+        {/* Card único com AnimatePresence */}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-surface rounded-xl p-6 md:p-8 border border-graysoft/60 shadow-brand-md relative overflow-hidden"
+            >
+              <div
+                className="absolute top-4 right-4 text-primary/[0.05] text-6xl font-serif leading-none select-none"
+                aria-hidden
+              >
+                &ldquo;
+              </div>
+
+              <div className="flex gap-1 mb-4">
+                {Array.from({ length: testimonial.stars }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="w-5 h-5 fill-amber-400 text-amber-400"
+                    strokeWidth={1.5}
+                  />
+                ))}
+              </div>
+
+              <p className="text-ink-secondary mb-6 text-sm sm:text-base italic leading-relaxed relative z-10">
+                &ldquo;{testimonial.quote}&rdquo;
+              </p>
+
+              <div className="flex items-center gap-4">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-primary/10 flex items-center justify-center">
+                  {testimonial.image ? (
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.author}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="text-sm font-medium text-primary">
+                      {testimonial.author
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")
+                        .slice(0, 2)
+                        .toUpperCase()}
+                    </span>
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-medium text-ink">{testimonial.author}</p>
+                  <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    {testimonial.role}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Controles */}
+        <div className="flex items-center justify-center gap-4 mt-6">
+          <button
+            onClick={prev}
+            aria-label="Depoimento anterior"
+            className="w-9 h-9 rounded-full border border-graysoft/60 bg-surface shadow-brand-sm flex items-center justify-center text-ink-secondary hover:text-primary hover:border-primary transition-colors"
           >
-            {activeTestimonials.map((testimonial, i) => (
-              <TestimonialCard key={testimonial.author} testimonial={testimonial} index={i} />
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <div className="flex gap-2">
+            {activeTestimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i, i > current ? 1 : -1)}
+                aria-label={`Ir para depoimento ${i + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === current ? "bg-primary w-4" : "bg-graysoft w-2"
+                }`}
+              />
             ))}
           </div>
 
-          {/* Controles */}
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <button
-              onClick={prev}
-              aria-label="Depoimento anterior"
-              className="w-9 h-9 rounded-full border border-graysoft/60 bg-surface shadow-brand-sm flex items-center justify-center text-ink-secondary hover:text-primary hover:border-primary transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            <div className="flex gap-2">
-              {activeTestimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => scrollTo(i)}
-                  aria-label={`Ir para depoimento ${i + 1}`}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    i === current ? "bg-primary w-4" : "bg-graysoft"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={next}
-              aria-label="Próximo depoimento"
-              className="w-9 h-9 rounded-full border border-graysoft/60 bg-surface shadow-brand-sm flex items-center justify-center text-ink-secondary hover:text-primary hover:border-primary transition-colors"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          <button
+            onClick={next}
+            aria-label="Próximo depoimento"
+            className="w-9 h-9 rounded-full border border-graysoft/60 bg-surface shadow-brand-sm flex items-center justify-center text-ink-secondary hover:text-primary hover:border-primary transition-colors"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
