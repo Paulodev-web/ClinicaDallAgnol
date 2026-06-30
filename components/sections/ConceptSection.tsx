@@ -40,13 +40,13 @@ export function ConceptSection() {
             viewport={{ once: true }}
             className="order-3 lg:order-3 lg:col-start-2 lg:row-start-2 -mt-2 lg:-mt-1"
           >
-            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+            <p className="text-ink-secondary text-base leading-relaxed mb-6">
               Com mais de 21 anos de dedicação à Odontologia, o Cirurgião-Dentista
               Dr. Cláudio Dall&apos;Agnol construiu uma trajetória pautada pela
               excelência clínica, atualização constante e cuidado genuíno com seus
               pacientes.
             </p>
-            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+            <p className="text-ink-secondary text-base leading-relaxed mb-6">
               Em 2015, concretizou o sonho de fundar a Dall&apos;Agnol Odontologia,
               um espaço criado para oferecer atendimento de excelência, aliando
               conhecimento científico, tecnologia e acolhimento humano. Desde
@@ -54,12 +54,12 @@ export function ConceptSection() {
               dos tratamentos e pela construção de relações de confiança duradouras
               com seus pacientes.
             </p>
-            <p className="text-ink-secondary text-lg leading-relaxed mb-6">
+            <p className="text-ink-secondary text-base leading-relaxed mb-6">
               Acreditamos que cada sorriso possui uma história única. Por isso,
               cada atendimento é realizado de forma personalizada, respeitando as
               necessidades, expectativas e objetivos de cada pessoa.
             </p>
-            <p className="text-ink-secondary text-lg leading-relaxed">
+            <p className="text-ink-secondary text-base leading-relaxed">
               Na Dall&apos;Agnol Odontologia, excelência técnica e cuidado humano
               caminham juntos para proporcionar saúde, bem-estar e confiança
               através do sorriso.

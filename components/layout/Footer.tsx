@@ -54,7 +54,7 @@ export function Footer() {
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.14em] text-primary mb-4">Horário de Atendimento</h3>
             <p className="text-ink-secondary text-sm">
-              Segunda a Sexta: 8h às 18h
+              Segunda a Sexta: 8h às 11:30 | 13h às 18h
               <br />
               Sábado: 8h às 12h
             </p>

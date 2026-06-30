@@ -12,7 +12,7 @@ const gallery = [
   {
     image: "/Consultorio2.jpeg",
     title: "Design contemporâneo",
-    caption: "Iluminação pensada para precisão, tranquilidade e um ambiente premium.",
+    caption: "Ambientes pensados para maior conforto desde a etapa de avaliação, diagnóstico e tratamento.",
   },
   {
     image: "/Consultorio3.jpeg",

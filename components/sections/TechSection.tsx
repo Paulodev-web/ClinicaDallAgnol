@@ -20,13 +20,13 @@ const techItems: TechItem[] = [
   {
     title: "Escaneamento Intraoral",
     description:
-      "Captura digital precisa dos dentes, sem moldagens desconfortáveis, para planejamento personalizado de cada tratamento.",
+      "Odontologia digital através de escaneamento proporcionando mais conforto e fidelidade na cópia dos elementos dentários.",
     video: "/Intra-oral.MOV",
     imageAlt: "Dr. Claudio Dall'Agnol realizando escaneamento intraoral na clínica",
     empty: false,
   },
   {
-    title: "Raio X Portátil",
+    title: "Aparelho de Raio X portátil e Sensor digital",
     description: "Diagnóstico rápido e preciso direto no consultório.",
     image: "/Claudiocomintraoral.jpg",
     imageAlt: "Dr. Claudio Dall'Agnol realizando diagnóstico no consultório",

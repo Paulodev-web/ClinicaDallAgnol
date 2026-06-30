@@ -8,7 +8,7 @@ import { MAPS_URL, ADDRESS, MAPS_EMBED_URL, WHATSAPP_NUMBER } from "@/lib/consta
 import { trackWhatsAppClick } from "@/lib/track";
 
 const schedule = [
-  { days: "Segunda a Sexta", hours: "08h às 18h" },
+  { days: "Segunda a Sexta", hours: "08h às 11:30 | 13h às 18h" },
   { days: "Sábado", hours: "08h às 12h" },
 ];
 

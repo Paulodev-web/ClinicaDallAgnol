@@ -48,7 +48,7 @@ export default function EquipePage() {
     <>
       <PageHero
         title="Talento individual, excelência coletiva."
-        subtitle="Um corpo clínico multidisciplinar que une especialidades complementares para um diagnóstico de alta precisão."
+        subtitle="Na DallAgnol Odontologia você encontra profissionais que são especializados nas diversas áreas da Odontologia para um diagnóstico e tratamento de alta previsibilidade."
       />
 
       <section className="section-py bg-page">

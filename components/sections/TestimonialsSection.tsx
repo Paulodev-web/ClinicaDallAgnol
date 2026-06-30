@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useState, useCallback } from "react";
 
 type Testimonial = {
   quote: string;
@@ -19,7 +20,35 @@ const testimonials: Testimonial[] = [
     quote:
       "Desde o início senti segurança e transparência em um caso que não era fácil. Sinto não só um sorriso perfeito, muito além das minhas expectativas, mas a volta da autoestima e a vontade de sorrir sem vergonha. Recomendo de olhos fechados — fui acolhida do início ao fim por toda a equipe e pelo Dr. Cláudio.",
     author: "Cauane Soares",
-    role: "Reabilitação Oral",
+    role: "Ortodontia",
+    stars: 5,
+  },
+  {
+    quote:
+      "Sou paciente do Dr. Cláudio há uns 14 anos. Iniciei com implantes dentários na arcada superior e inferior, depois realizei facetas nos dentes da frente que estavam desgastados e, recentemente, coloquei lindas porcelanas. Amo o trabalho dele — super atencioso, explica claramente todos os procedimentos e sempre que tenho algum problema sou atendida rapidamente. Indico para todos que quiserem um sorriso mais lindo!",
+    author: "Lucena",
+    role: "Implantes e Facetas",
+    stars: 5,
+  },
+  {
+    quote:
+      "Quero expressar minha gratidão por todos esses anos de dedicação, profissionalismo e cuidado. Há cerca de 20 anos tenho a felicidade de contar com o seu atendimento, sempre realizado com atenção, competência e carinho. Agradeço por cada orientação, pelo cuidado e pelo acolhimento em todos os momentos. Que Deus continue abençoando sua vida e sua profissão, para que você siga transformando sorrisos e cuidando das pessoas com a mesma dedicação de sempre.",
+    author: "Evanir",
+    role: "Paciente há 20 anos",
+    stars: 5,
+  },
+  {
+    quote:
+      "No início do meu tratamento, realizei a extração de dois dentes sisos com o Dr. Cláudio Dall'Agnol. Desde a primeira consulta, ele me transmitiu muita segurança e tranquilidade, e a cirurgia ocorreu sem qualquer desconforto. Sempre fui muito bem atendida por toda a equipe. O que mais me chamou a atenção foi a forma como o Dr. Cláudio atende seus pacientes, olhando para a saúde bucal de forma integral e não apenas para um problema isolado. Seguindo o protocolo indicado, realizei posteriormente a extração de mais dois sisos e quatro dentes — etapa necessária para alcançar o resultado que hoje tenho a satisfação de ver concretizado. Sou muito grata ao Dr. Cláudio e ao Dr. Gabriel pelo excelente atendimento, profissionalismo e dedicação durante todo o processo. Recomendo com total confiança.",
+    author: "Edinara Vedi",
+    role: "Cirurgia e Ortodontia",
+    stars: 5,
+  },
+  {
+    quote:
+      "Aprendi a sorrir novamente e a mastigar corretamente, graças ao tratamento realizado na Clínica Odontológica Dall'agnol! Excelência no atendimento, cortesia, acolhimento, materiais de qualidade e trato diferenciado. Clínica nota 10!",
+    author: "Paulo C. V.",
+    role: "Paciente",
     stars: 5,
   },
   {
@@ -66,7 +95,7 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-surface rounded-xl p-5 border border-graysoft/60 shadow-brand-md h-full flex flex-col relative overflow-hidden flex-shrink-0 w-[85vw] max-w-[340px] md:w-auto md:max-w-none snap-center"
+      className="bg-surface rounded-xl p-5 border border-graysoft/60 shadow-brand-md h-full flex flex-col relative overflow-hidden flex-shrink-0 w-[85vw] max-w-[340px] md:w-[45vw] md:max-w-[520px] snap-center"
     >
       {/* Aspas de fundo com opacidade baixa */}
       <div
@@ -122,6 +151,22 @@ function TestimonialCard({
 }
 
 export function TestimonialsSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const total = activeTestimonials.length;
+
+  const scrollTo = useCallback((index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const card = el.children[index] as HTMLElement;
+    if (!card) return;
+    el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
+    setCurrent(index);
+  }, []);
+
+  const prev = () => scrollTo((current - 1 + total) % total);
+  const next = () => scrollTo((current + 1) % total);
+
   return (
     <section className="py-10 md:py-14 bg-section-alt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -168,20 +213,48 @@ export function TestimonialsSection() {
           </p>
         </motion.div>
 
-        {/* Carrossel no mobile */}
-        <div className="md:hidden -mx-4 px-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide">
-          <div className="flex gap-4 pb-2">
+        {/* Carrossel — mobile e desktop */}
+        <div className="relative">
+          <div
+            ref={scrollRef}
+            className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide flex gap-4 pb-2"
+          >
             {activeTestimonials.map((testimonial, i) => (
               <TestimonialCard key={testimonial.author} testimonial={testimonial} index={i} />
             ))}
           </div>
-        </div>
 
-        {/* Grid no desktop */}
-        <div className="hidden md:grid md:grid-cols-2 gap-6">
-          {activeTestimonials.map((testimonial, i) => (
-            <TestimonialCard key={testimonial.author} testimonial={testimonial} index={i} />
-          ))}
+          {/* Controles */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <button
+              onClick={prev}
+              aria-label="Depoimento anterior"
+              className="w-9 h-9 rounded-full border border-graysoft/60 bg-surface shadow-brand-sm flex items-center justify-center text-ink-secondary hover:text-primary hover:border-primary transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            <div className="flex gap-2">
+              {activeTestimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollTo(i)}
+                  aria-label={`Ir para depoimento ${i + 1}`}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    i === current ? "bg-primary w-4" : "bg-graysoft"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              aria-label="Próximo depoimento"
+              className="w-9 h-9 rounded-full border border-graysoft/60 bg-surface shadow-brand-sm flex items-center justify-center text-ink-secondary hover:text-primary hover:border-primary transition-colors"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
