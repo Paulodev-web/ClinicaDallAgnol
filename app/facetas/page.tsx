@@ -200,8 +200,8 @@ export default function FacetasPage() {
                 proporção com acabamento que imita a translucidez do dente natural.
               </p>
               <p className="text-ink-secondary text-lg leading-relaxed">
-                Na Dall&apos;Agnol, cada caso é conduzido pelo Dr. Claudio — especialista
-                em lentes de contato e reabilitação oral — com planejamento
+                Na Dall&apos;Agnol, cada caso é conduzido pelo Dr. Claudio — Ampla experiência
+                em reabilitação oral — com planejamento
                 digital, visagismo e mock-up para que você aprove o resultado
                 antes de qualquer intervenção.
               </p>

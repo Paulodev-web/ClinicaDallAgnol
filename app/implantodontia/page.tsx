@@ -90,7 +90,7 @@ const steps = [
     number: "03",
     title: "Cirurgia guiada",
     description:
-      "Instalação dos implantes com protocolos de esterilização rigorosos, anestesia local e, quando indicado, sedação consciente para máximo conforto.",
+      "Essa tecnologia permite procedimentos mais previsíveis, minimamente invasivos e, em muitos casos, com menor desconforto pós-operatório, menor tempo cirúrgico e recuperação mais rápida.",
   },
   {
     number: "04",
