@@ -256,15 +256,14 @@ export default function PeriodontiaPage() {
               </h2>
               <p className="text-ink-secondary text-lg leading-relaxed mb-6">
                 Gengivas saudáveis são o alicerce de qualquer sorriso. A
-                periodontia cuida dos tecidos que envolvem e sustentam os dentes
-                — tratando inflamações, combate à placa bacteriana e preservando
-                o osso alveolar para evitar perdas dentárias prematuras.
+                periodontia cuida dos tecidos que envolvem e sustentam dentes e
+                implantes dentários — prevenindo e tratando as doenças
+                gengivais, periodontais e perimplantares.
               </p>
               <p className="text-ink-secondary text-lg leading-relaxed">
-                Na Dall&apos;Agnol, cada paciente recebe avaliação periodontal
-                detalhada, plano de tratamento transparente e acompanhamento
-                contínuo — da prevenção à manutenção de longo prazo, integrado
-                aos demais cuidados odontológicos da clínica.
+                O foco principal é o controle do acúmulo de placa bacteriana,
+                fator causador de doenças como gengivite, periodontites,
+                perimplantites e cárie.
               </p>
             </motion.div>
             <motion.div
@@ -429,15 +428,9 @@ export default function PeriodontiaPage() {
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={1.5} />
                 <span>
-                  Escovar os dentes pelo menos três vezes ao dia, incluindo a
-                  linha gengival, com escova de cerdas macias.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={1.5} />
-                <span>
-                  Usar fio dental ou escovas interdentais diariamente — a placa
-                  entre os dentes é uma das principais causas de gengivite.
+                  Escovar adequadamente os dentes com a escova multicerdas, bem
+                  como o uso diário do fio dental e consultas periódicas com o
+                  Periodontista.
                 </span>
               </li>
               <li className="flex items-start gap-3">

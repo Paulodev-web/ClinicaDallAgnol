@@ -50,7 +50,7 @@ const delegatedServices = [
     title: "Endodontia",
     copy: "Precisão e conforto em cada detalhe.",
     description:
-      "Nossa equipe conta com especialista dedicado à Endodontia, utilizando Microscopia Operatória para tratamentos rápidos e indolores.",
+      "Instrumentação mecanizada dos canais radiculares com radiografia digital e localizador apical para maior previsibilidade no tratamento de canal. Procedimento realizado pelo Dr. Gabriel, Especialista em Endodontia.",
     image: "/Endodontia.jpg",
   },
 ];
@@ -70,7 +70,7 @@ const secondarySpecialties = [
   },
   {
     id: "extracoes",
-    title: "Extrações Clínicas",
+    title: "Extrações Dentárias",
     description: "Remoção segura de dentes (sisos, etc.).",
     icon: Cross,
   },

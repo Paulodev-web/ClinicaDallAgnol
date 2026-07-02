@@ -172,7 +172,7 @@ const faqItems = [
   },
   {
     q: "Como agendar uma avaliação?",
-    a: "Entre em contato pelo formulário ou WhatsApp. Seu caso será direcionado ao Dr. Claudio, especialista em implantes e reabilitação oral, para a primeira consulta de diagnóstico.",
+    a: "Entre em contato pelo formulário ou WhatsApp. Seu caso será direcionado ao Dr. Claudio para a primeira consulta de diagnóstico.",
   },
 ];
 
