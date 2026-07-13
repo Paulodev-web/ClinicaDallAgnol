@@ -205,14 +205,22 @@ export default function AdminDashboardPage() {
 
         {data && a && (
           <div className="space-y-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
               <DashboardKpiCard
                 title="Visitantes Únicos"
                 value={a.uniqueVisitors}
-                subtitle={`${a.totalViews} visualizações totais · Últimos ${a.periodDays} dias`}
+                subtitle={`Últimos ${a.periodDays} dias`}
                 icon={Users}
                 iconClassName="bg-primary"
                 trend={a.trends.uniqueVisitors}
+              />
+              <DashboardKpiCard
+                title="Visualizações Totais"
+                value={a.totalViews}
+                subtitle={`Últimos ${a.periodDays} dias`}
+                icon={Eye}
+                iconClassName="bg-[#6C5CE7]"
+                trend={a.trends.totalViews}
               />
               <DashboardKpiCard
                 title="Engajamento por Visitante"
@@ -226,7 +234,7 @@ export default function AdminDashboardPage() {
                 title="Taxa de Conversão"
                 value={`${a.conversionRate}%`}
                 subtitle={`${totalEngagements} conversões de ${a.uniqueVisitors} visitantes`}
-                icon={Eye}
+                icon={TrendingUp}
                 iconClassName="bg-[#4A90C4]"
                 trend={a.trends.conversionRate}
               />
