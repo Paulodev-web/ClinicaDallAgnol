@@ -23,7 +23,8 @@ const especialidades = [
   {
     title: "Ortodontia",
     description: "Alinhamento e correção da posição dos dentes.",
-    image: "/Ortodontia.jpg",
+    image: "/Ortodontiaceci.jpg",
+    imageClass: "object-cover object-[center_56%]",
     href: "/servicos#ortodontia",
     highlight: false,
   },

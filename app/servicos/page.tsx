@@ -43,7 +43,8 @@ const delegatedServices = [
     copy: "Alinhamento e correção da posição dos dentes.",
     description:
       "Tratamentos ortodônticos para corrigir a oclusão e alinhar o sorriso, com técnicas modernas e conforto.",
-    image: "/Ortodontia.jpg",
+    image: "/Ortodontiaceci.jpg",
+    imageClass: "object-cover object-[center_70%]",
   },
   {
     id: "endodontia",
@@ -229,7 +230,7 @@ export default function ServicosPage() {
                     alt={service.title}
                     fill
                     quality={90}
-                    className="object-cover"
+                    className={service.imageClass ?? "object-cover"}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
